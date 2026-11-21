@@ -1,0 +1,23 @@
+{
+  "name": "rigveda-explorers",
+  "version": "1.0.0",
+  "description": "Rigveda for Young Explorers - Android app",
+  "main": "index.js",
+  "scripts": {
+    "sync": "cap sync android"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor-community/text-to-speech": "^8.0.2",
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/cli": "^8.6.2",
+    "@capacitor/core": "^8.6.2",
+    "@fontsource/baloo-2": "^5.3.0",
+    "@fontsource/noto-serif-kannada": "^5.3.0",
+    "@fontsource/nunito": "^5.3.0",
+    "@fontsource/tiro-devanagari-sanskrit": "^5.3.0"
+  },
+  "private": true
+}

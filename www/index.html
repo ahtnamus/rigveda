@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rigveda for Young Explorers</title>
+<meta name="theme-color" content="#f28c28">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Rigveda">
+<link rel="stylesheet" href="fonts/fonts.css">
+<script src="js/capacitor.js"></script>
+<script src="js/plugin.js"></script>
+<style>
+:root{
+  --saffron:#f28c28; --saffron-d:#c9651a; --cream:#fff8ec; --paper:#fffdf8;
+  --ink:#2b2140; --muted:#6c6280; --blue:#2e4a9e; --sky:#e8f0ff;
+  --green:#2f8f5b; --leaf:#e6f6ec; --rose:#fde8e4; --gold:#f6c343;
+  --line:#efe3cf; --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:var(--cream);font-size:17px;line-height:1.65}
+a{color:var(--blue)}
+h1,h2,h3,h4{font-family:"Baloo 2",Nunito,sans-serif;line-height:1.2;margin:0 0 .4em}
+.dev{font-family:"Tiro Devanagari Sanskrit",serif}
+body.kn .dev,body.kn .vdev{font-family:"Noto Serif Kannada","Tiro Devanagari Sanskrit",serif}
+body.kn .vdev{font-size:1.18rem;line-height:2.05}
+.script-btn{border:2px solid var(--blue);background:#fff;color:var(--blue);border-radius:999px;padding:3px 10px;font:inherit;font-weight:800;cursor:pointer;font-size:.9rem;white-space:nowrap}
+.tools{display:flex;gap:8px;align-items:center}
+.install-btn{display:none;border:0;background:var(--green);color:#fff;border-radius:999px;padding:5px 12px;font:inherit;font-weight:800;cursor:pointer;font-size:.9rem;white-space:nowrap}
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(255,248,236,.94);backdrop-filter:blur(8px);border-bottom:2px solid var(--line)}
+.bar{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:10px 18px}
+.logo{white-space:nowrap;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:"Baloo 2";font-weight:800;font-size:1.25rem}
+.logo .sun{width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#ffd56b,#f28c28);display:grid;place-items:center;color:#fff;font-size:1.2rem;box-shadow:0 0 0 4px #ffe7c2}
+nav{margin-left:auto;display:flex;gap:4px;flex-wrap:nowrap}
+nav a{text-decoration:none;color:var(--ink);font-weight:700;padding:6px 12px;border-radius:999px;font-size:.95rem}
+nav a:hover,nav a.on{background:#ffe7c2}
+.stars-pill{background:#fff;border:2px solid var(--gold);border-radius:999px;padding:3px 10px;font-weight:800;font-size:.9rem;white-space:nowrap}
+main{max-width:1060px;margin:0 auto;padding:22px 18px 60px}
+/* hero */
+.hero{background:linear-gradient(135deg,#ffb35c,#f28c28 55%,#e0662a);color:#fff;border-radius:28px;padding:38px 30px;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(2rem,5vw,3.1rem);margin-bottom:.2em}
+.hero p{font-size:1.12rem;max-width:620px;margin:.3em 0 1.2em}
+.hero .om{position:absolute;right:-10px;bottom:-40px;font-size:12rem;opacity:.16;font-family:"Tiro Devanagari Sanskrit"}
+.btn{display:inline-block;background:#fff;color:var(--saffron-d);font-weight:800;padding:11px 20px;border-radius:999px;text-decoration:none;border:0;cursor:pointer;font-size:1rem;font-family:Nunito}
+.btn.ghost{background:transparent;color:#fff;border:2px solid #fff}
+.btn.blue{background:var(--blue);color:#fff}
+.btn.small{padding:7px 14px;font-size:.9rem}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.section-title{margin:34px 0 12px;font-size:1.6rem}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.card{background:var(--paper);border:2px solid var(--line);border-radius:var(--radius);padding:18px;text-decoration:none;color:var(--ink);display:block;transition:transform .15s,box-shadow .15s;position:relative}
+a.card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(160,100,30,.13)}
+.card .emo{font-size:2rem;line-height:1}
+.card h3{margin:.4em 0 .2em;font-size:1.2rem}
+.card p{margin:0;color:var(--muted);font-size:.95rem}
+.card .tag{display:inline-block;font-size:.78rem;font-weight:800;background:#ffe7c2;color:var(--saffron-d);border-radius:999px;padding:2px 9px;margin-bottom:4px}
+.card .done{position:absolute;top:12px;right:14px;font-size:1.2rem}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:20px}
+.stat{background:#fff;border-radius:16px;padding:14px;text-align:center;border:2px solid var(--line)}
+.stat b{display:block;font-family:"Baloo 2";font-size:2rem;color:var(--saffron-d);line-height:1.1}
+.stat span{color:var(--muted);font-size:.92rem}
+/* article */
+.crumbs{font-size:.9rem;color:var(--muted);margin-bottom:10px}
+.crumbs a{color:var(--muted)}
+article{background:var(--paper);border:2px solid var(--line);border-radius:26px;padding:28px clamp(18px,4vw,40px)}
+article h1{font-size:clamp(1.8rem,4.5vw,2.5rem)}
+article h2{font-size:1.4rem;margin-top:1.4em}
+.lead{font-size:1.12rem;color:var(--muted)}
+.big-emo{font-size:3rem}
+.box{border-radius:16px;padding:14px 18px;margin:18px 0}
+.box.know{background:var(--sky);border-left:6px solid var(--blue)}
+.box.learn{background:var(--leaf);border-left:6px solid var(--green)}
+.box.think{background:var(--rose);border-left:6px solid #d0574a}
+.box h4{margin:0 0 .3em;font-size:1.1rem}
+.box ul{margin:.2em 0;padding-left:1.2em}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+.fact{background:#fff;border:2px dashed var(--line);border-radius:14px;padding:10px 12px}
+.fact small{display:block;color:var(--muted);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+.fact div{font-weight:700}
+.verse{background:linear-gradient(180deg,#fff4e0,#ffeacc);border:2px solid #f6d4a1;border-radius:20px;padding:20px;margin:18px 0;text-align:center}
+.verse .ref{font-size:.85rem;font-weight:800;color:var(--saffron-d)}
+.verse .dev{font-size:clamp(1.25rem,3.4vw,1.6rem);line-height:1.8;margin:8px 0;color:#5a2a08}
+.verse .iast{font-style:italic;color:#7a4b22;margin-bottom:10px}
+.verse .mean{background:#fff;border-radius:14px;padding:10px 14px;font-weight:600}
+.timeline{list-style:none;padding:0;margin:14px 0;border-left:4px solid var(--gold)}
+.timeline li{position:relative;padding:4px 0 12px 20px}
+.timeline li:before{content:"";position:absolute;left:-11px;top:9px;width:18px;height:18px;border-radius:50%;background:var(--saffron);border:3px solid #fff}
+.timeline b{color:var(--saffron-d)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{background:#fff;border:2px solid var(--line);border-radius:999px;padding:5px 12px;font-weight:700;font-size:.92rem}
+/* quiz */
+.quiz{background:#fff;border:3px solid var(--gold);border-radius:20px;padding:18px;margin-top:24px}
+.quiz h4{margin:0 0 .4em}
+.opts{display:grid;gap:8px;margin-top:8px}
+.opt{text-align:left;background:var(--cream);border:2px solid var(--line);padding:10px 14px;border-radius:12px;font:inherit;cursor:pointer;color:var(--ink)}
+.opt:hover{border-color:var(--saffron)}
+.opt.right{background:var(--leaf);border-color:var(--green)}
+.opt.wrong{background:var(--rose);border-color:#d0574a}
+.feedback{margin-top:8px;font-weight:700;min-height:1.4em}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.pager a{flex:1;min-width:200px;text-decoration:none;background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 16px;color:var(--ink)}
+.pager a small{display:block;color:var(--muted);font-weight:700}
+.pager a.next{text-align:right}
+/* mandala grid */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px;margin-top:12px}
+.mgrid a,.mgrid span{display:grid;place-items:center;height:42px;border-radius:10px;font-weight:800;font-size:.9rem;text-decoration:none}
+.mgrid span{background:#f3ece0;color:#b3a894}
+.mgrid a{background:var(--saffron);color:#fff;box-shadow:0 3px 0 var(--saffron-d)}
+.mgrid a:hover{transform:translateY(-2px)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:5px}
+.filter{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+.filter button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font:inherit;font-weight:700;cursor:pointer}
+.filter button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.speak{float:right;margin-left:10px}
+/* verses */
+.toolbar{z-index:5;background:#fff;border:2px solid var(--line);border-radius:16px;padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+.toolbar label{font-weight:700;font-size:.9rem;display:flex;align-items:center;gap:6px}
+.toolbar select{font:inherit;border:2px solid var(--line);border-radius:10px;padding:4px 6px;background:var(--cream)}
+.tbtn{border:2px solid var(--line);background:var(--cream);border-radius:999px;padding:6px 12px;font:inherit;font-weight:800;cursor:pointer;color:var(--ink);font-size:.9rem}
+.tbtn:hover{border-color:var(--saffron)}
+.tbtn.main{background:var(--saffron);color:#fff;border-color:var(--saffron)}
+.vlist{display:grid;gap:10px}
+.vcard{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 14px;transition:background .2s,border-color .2s}
+.vcard.playing{background:#fff4e0;border-color:var(--saffron)}
+.vhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.vnum{background:var(--blue);color:#fff;font-weight:800;border-radius:999px;padding:1px 10px;font-size:.85rem}
+.vbtns{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.vbtns button{border:2px solid var(--line);background:var(--cream);border-radius:999px;padding:3px 10px;font:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
+.vbtns button:hover{border-color:var(--saffron)}
+.vdev{font-family:"Tiro Devanagari Sanskrit",serif;font-size:1.28rem;line-height:1.9;color:#5a2a08}
+.vdev .ln{display:block;border-radius:8px;padding:0 4px}
+.vdev .ln.now{background:#ffe1ad}
+.viast{font-style:italic;color:#7a4b22;font-size:.95rem;margin-top:4px}
+.hide-iast .viast{display:none}
+.vmean{margin-top:8px;background:var(--sky);border-radius:12px;padding:8px 12px;font-size:.97rem;display:flex;gap:8px;align-items:flex-start}
+.vmean .mt{flex:1}
+.vmean button{border:2px solid #cddaf5;background:#fff;border-radius:999px;padding:2px 9px;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.hide-mean .vmean,.hide-mean .gblock{display:none}
+.gblock{margin-top:14px;background:var(--sky);border-radius:16px;padding:12px 16px}
+.gblock ol{margin:.4em 0;padding-left:1.4em}
+.gblock li{margin:.3em 0}
+.voice-note{background:var(--rose);border-radius:14px;padding:10px 14px;font-size:.92rem;margin:10px 0}
+.voice-note.ok{background:var(--leaf)}
+.turn{display:none;position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--green);color:#fff;font-weight:800;padding:10px 20px;border-radius:999px;z-index:30;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.turn.show{display:block}
+.mgrid a.plain{background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.mgrid a.plain:hover{border-color:var(--saffron)}
+.jump{display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px;margin:12px 0}
+.jump select,.jump input{font:inherit;border:2px solid var(--line);border-radius:10px;padding:6px 8px;width:auto}
+.jump input{width:90px}
+@media (min-width:641px){.toolbar{position:sticky;top:64px}}
+.modal{display:none;position:fixed;inset:0;background:rgba(30,20,50,.45);z-index:40;align-items:center;justify-content:center;padding:18px}
+.modal.show{display:flex}
+.modal-box{background:#fff;border-radius:22px;padding:22px;max-width:420px}
+.loading{padding:20px;text-align:center;color:var(--muted);font-weight:700}
+footer{text-align:center;color:var(--muted);font-size:.88rem;padding:20px}
+@media (max-width:760px){
+  nav{display:none}
+  .tools{margin-left:auto}
+  .bar{flex-wrap:wrap}
+  .mobile-nav{display:flex!important}
+  .hero{padding:28px 20px}
+}
+.mobile-nav{display:none;gap:6px;overflow-x:auto;padding:0 18px 10px;max-width:1060px;margin:0 auto}
+.mobile-nav a{flex:none;text-decoration:none;color:var(--ink);font-weight:700;padding:5px 12px;border-radius:999px;background:#fff;border:2px solid var(--line);font-size:.9rem}
+.mobile-nav a.on{background:#ffe7c2}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="logo" href="#home"><span class="sun">☀</span>Rigveda Explorers</a>
+    <nav id="nav">
+      <a href="#home" data-k="home">Home</a>
+      <a href="#ch1" data-k="ch">Chapters</a>
+      <a href="#suktas" data-k="suktas">Suktas</a>
+      <a href="#mandalas" data-k="mandalas">Mandalas</a>
+    </nav>
+    <div class="tools"><button class="install-btn" id="installBtn">📲 Install app</button>
+    <button class="script-btn" id="scriptBtn" title="Change the script of the Sanskrit mantras">अ → ಅ</button>
+    <span class="stars-pill" id="stars" title="Stars you earned by answering quizzes">⭐ 0</span></div>
+  </div>
+  <div class="mobile-nav" id="mnav">
+    <a href="#home" data-k="home">Home</a>
+    <a href="#ch1" data-k="ch">Chapters</a>
+    <a href="#suktas" data-k="suktas">Suktas</a>
+    <a href="#mandalas" data-k="mandalas">Mandalas</a>
+  </div>
+</header>
+<main id="app"></main>
+<div class="modal" id="iosHelp"><div class="modal-box"><h3>📲 Install on iPad / iPhone</h3><ol><li>Open this page in <b>Safari</b>.</li><li>Tap the <b>Share</b> button (square with an arrow ⬆️).</li><li>Choose <b>Add to Home Screen</b>, then <b>Add</b>.</li></ol><p>The Rigveda icon will appear on your home screen and work without internet.</p><button class="btn blue" id="iosClose">Got it</button></div></div>
+<div class="turn" id="toast" style="background:var(--blue)"></div>
+<div class="turn" id="turn">🗣️ Your turn — say it!</div>
+<footer>Made for young learners 🪔 Simple meanings are friendly explanations, not word-for-word translations. Ask a teacher or elder to help you chant the verses correctly.<br>Full Sanskrit text of the Rigveda from <a href="https://github.com/bhavykhatri/DharmicData">DharmicData</a> by Bhavy Khatri, used under the Open Database License (ODbL). English meanings: Ralph T. H. Griffith's translation (1896, public domain), as digitised by the <a href="https://vedaweb.uni-koeln.de">VedaWeb</a> project, University of Cologne.</footer>
+
+<script>
+/* ---------------- DATA: STORY CHAPTERS ---------------- */
+const CHAPTERS = [
+{
+ id:"ch1", emoji:"📜", title:"What is the Rigveda?",
+ short:"The oldest book of songs in India — and one of the oldest in the world.",
+ body:`
+<p class="lead">Imagine a giant treasure box full of songs. Not songs for dancing, but songs of <b>praise and wonder</b> — about the Sun, the Fire, the Wind, the Rivers and the Sky. That treasure box is the <b>Rigveda</b>.</p>
+<h2>What does the name mean?</h2>
+<p>The name has two parts:</p>
+<div class="chips"><span class="chip">ऋक् (Ṛk) = a verse of praise</span><span class="chip">वेद (Veda) = knowledge</span></div>
+<p>So <b>Rigveda</b> means <b>"Knowledge in verses of praise."</b></p>
+<h2>How big is it?</h2>
+<p>The Rigveda is arranged like a library:</p>
+<ul>
+<li>It has <b>10 books</b>. Each book is called a <b>Mandala</b> (मण्डल), which means "circle".</li>
+<li>Each Mandala has many hymns. Each hymn is called a <b>Sukta</b> (सूक्त).</li>
+<li>Each Sukta is made of verses. Each verse is called a <b>Ṛk</b> or <b>Ṛcā</b>.</li>
+</ul>
+<div class="stats"><div class="stat"><b>10</b><span>Mandalas (books)</span></div><div class="stat"><b>1,028</b><span>Suktas (hymns)</span></div><div class="stat"><b>≈10,600</b><span>Verses</span></div></div>
+<div class="box know"><h4>💡 Did you know?</h4>The word "Sukta" comes from <b>su</b> (good) + <b>ukta</b> (said). A sukta is something that is <b>"well said"</b>!</div>`,
+ quiz:{q:"What is one book of the Rigveda called?",o:["A Mandala","A Sukta","A Chapter"],a:0,why:"A Mandala means 'circle'. The Rigveda has 10 of them."}
+},
+{
+ id:"ch2", emoji:"🏞️", title:"When and where was it made?",
+ short:"A land of seven rivers, a very, very long time ago.",
+ body:`
+<p class="lead">The Rigveda was composed so long ago that there were no paper books, no printing and no phones. People lived near rivers, kept cows, grew barley and gathered around fires.</p>
+<h2>Where?</h2>
+<p>The hymns talk about a land of rivers called <b>Sapta Sindhu</b> — "the Seven Rivers". This is the area of north-west India and Pakistan today, around the region we now call Punjab. Rivers like the <b>Sindhu (Indus)</b>, the <b>Sarasvati</b>, and the rivers of Punjab appear again and again in the songs.</p>
+<h2>When?</h2>
+<p>Nobody has a birth certificate for the Rigveda! Here is what people think:</p>
+<ul>
+<li>Many historians think most hymns were composed about <b>3,200 to 3,500 years ago</b> (around 1500–1200 BCE).</li>
+<li>Many traditional scholars in India believe it is <b>much older</b>, and that the Vedas are eternal knowledge that the seers "heard".</li>
+</ul>
+<p>Both groups agree on one thing: it is <b>one of the oldest texts of humanity</b> that is still being recited today.</p>
+<h2>A timeline</h2>
+<ul class="timeline">
+<li><b>Very long ago</b> — Rishis compose the hymns and teach them by heart.</li>
+<li><b>Later</b> — The hymns are collected into 10 Mandalas.</li>
+<li><b>About 1,000 years ago or more</b> — People start writing it down on palm leaves and birch bark.</li>
+<li><b>1300s CE</b> — The scholar <b>Sāyaṇa</b> writes a famous explanation (commentary) of the whole Rigveda.</li>
+<li><b>1849–1874</b> — The full Rigveda with Sāyaṇa's commentary is printed as a book in Europe, edited by Max Müller.</li>
+<li><b>2007</b> — UNESCO adds old Rigveda manuscripts kept in Pune to its "Memory of the World" list.</li>
+</ul>
+<div class="box know"><h4>💡 Did you know?</h4>"Sindhu" is the old name of the Indus river. The words <b>"Hindu"</b> and <b>"India"</b> both grew out of this river's name!</div>`,
+ quiz:{q:"What does 'Sapta Sindhu' mean?",o:["Seven mountains","Seven rivers","Seven kings"],a:1,why:"Sapta = seven, Sindhu = river. The hymns were made in a land of rivers."}
+},
+{
+ id:"ch3", emoji:"🧘", title:"The Rishis — poets who 'saw' the hymns",
+ short:"Meet the seers: men and women who gave us these songs.",
+ body:`
+<p class="lead">The people who gave us the hymns are called <b>Rishis</b> (ऋषि). The word means <b>"seer"</b> — someone who <i>sees</i>. Tradition says the rishis did not just write the hymns; they <b>saw or heard</b> them in deep meditation.</p>
+<h2>Families of rishis</h2>
+<p>Many Mandalas belong to one family, like a family photo album passed from grandparents to grandchildren:</p>
+<div class="facts">
+<div class="fact"><small>Mandala 2</small><div>Gṛtsamada family</div></div>
+<div class="fact"><small>Mandala 3</small><div>Viśvāmitra family</div></div>
+<div class="fact"><small>Mandala 4</small><div>Vāmadeva family</div></div>
+<div class="fact"><small>Mandala 5</small><div>Atri family</div></div>
+<div class="fact"><small>Mandala 6</small><div>Bharadvāja family</div></div>
+<div class="fact"><small>Mandala 7</small><div>Vasiṣṭha family</div></div>
+</div>
+<p>These six (Mandalas 2 to 7) are called the <b>"Family Books"</b>, and scholars think they are the oldest part.</p>
+<h2>Women seers too!</h2>
+<p>Some hymns are given by women rishis, called <b>Rishikas</b>. Names include <b>Ghoṣā</b>, <b>Lopāmudrā</b>, <b>Apālā</b> and <b>Vāk Āmbhṛṇī</b>, whose powerful "Devi Sukta" you can read in this site.</p>
+<div class="box learn"><h4>🌱 Think about it</h4>Rishis were curious. They looked at the dawn, the storm and the stars and asked: <i>"Who made all this? How does it work?"</i> You are a rishi too every time you ask a big question!</div>`,
+ quiz:{q:"What does the word 'Rishi' mean?",o:["King","Seer — one who sees","Warrior"],a:1,why:"Rishis are seers. Tradition says they 'saw' the hymns."}
+},
+{
+ id:"ch4", emoji:"🧠", title:"The Memory Miracle",
+ short:"How a whole book survived for thousands of years without paper.",
+ body:`
+<p class="lead">Here is the most amazing part: for a very long time the Rigveda was <b>never written down</b>. It was passed from teacher to student <b>only by memory</b> — and it stayed almost perfectly the same!</p>
+<h2>How did they do it?</h2>
+<p>Students learned the verses by chanting them in many clever patterns. These patterns are called <b>Pāṭhas</b>. Imagine three words: <b>A B C</b>.</p>
+<div class="facts">
+<div class="fact"><small>Saṃhitā pāṭha</small><div>A B C — joined, the normal way</div></div>
+<div class="fact"><small>Pada pāṭha</small><div>A · B · C — word by word</div></div>
+<div class="fact"><small>Krama pāṭha</small><div>AB · BC — in pairs</div></div>
+<div class="fact"><small>Jaṭā pāṭha</small><div>AB BA AB — like braiding hair</div></div>
+<div class="fact"><small>Ghana pāṭha</small><div>AB BA ABC CBA ABC — the hardest!</div></div>
+</div>
+<p>If you chant forwards and backwards like this, a mistake is very easy to catch. It works like a super-strong error checker — thousands of years before computers!</p>
+<h2>Sounds matter</h2>
+<p>Vedic chanting uses <b>svaras</b> — the voice goes up, stays, or comes down. Chanters sometimes move their hand to show these tones. Changing the tone could change the meaning, so they were very careful.</p>
+<div class="box know"><h4>💡 Did you know?</h4>UNESCO recognised the <b>tradition of Vedic chanting</b> as a treasure of humanity's "intangible heritage" — heritage you can't touch, only hear and remember.</div>`,
+ quiz:{q:"Why did chanters recite words forwards AND backwards?",o:["To make it fun only","To catch mistakes and keep it exact","Because they forgot the order"],a:1,why:"The patterns worked like an error checker so the words never changed."}
+},
+{
+ id:"ch5", emoji:"🔥", title:"Gods of Nature — the Devas",
+ short:"Fire, Sun, Wind, Rain, Dawn — meet the shining ones.",
+ body:`
+<p class="lead">"Deva" (देव) comes from a word meaning <b>"to shine"</b>. The Devas of the Rigveda are mostly <b>powers of nature</b> that people could see and feel every day.</p>
+<div class="grid" style="margin-top:14px">
+<div class="card"><div class="emo">🔥</div><h3>Agni</h3><p>Fire. The messenger who carries offerings to the gods. About 200 hymns!</p></div>
+<div class="card"><div class="emo">⚡</div><h3>Indra</h3><p>King of the gods, thunder and rain. The most praised — about 250 hymns.</p></div>
+<div class="card"><div class="emo">🌿</div><h3>Soma</h3><p>A sacred plant juice and its god. All of Mandala 9 is for Soma.</p></div>
+<div class="card"><div class="emo">🌊</div><h3>Varuṇa</h3><p>Guardian of cosmic order and truth; sees everything people do.</p></div>
+<div class="card"><div class="emo">🌅</div><h3>Uṣas</h3><p>Dawn, the bright goddess who wakes the world every morning.</p></div>
+<div class="card"><div class="emo">☀️</div><h3>Sūrya & Savitṛ</h3><p>The Sun — giver of light and energy.</p></div>
+<div class="card"><div class="emo">💨</div><h3>Vāyu & Maruts</h3><p>The Wind, and the storm-gods who ride in the clouds.</p></div>
+<div class="card"><div class="emo">🐴</div><h3>Aśvins</h3><p>Twin horsemen, doctors of the gods, who rescue people in trouble.</p></div>
+</div>
+<h2>Ṛta — the rule of the universe</h2>
+<p>A very important idea in the Rigveda is <b>Ṛta</b> (ऋत) — the <b>order of nature</b>. The Sun rises on time, seasons come in order, rivers flow to the sea. The rishis believed people should also live in order: by being <b>truthful and fair</b>. This idea later grew into the word <b>Dharma</b>.</p>
+<div class="box know"><h4>💡 Did you know?</h4>The very first word of the whole Rigveda is <b>"Agni"</b> — Fire!</div>`,
+ quiz:{q:"Which Deva has the most hymns in the Rigveda?",o:["Agni","Indra","Soma"],a:1,why:"Indra has about 250 hymns, Agni about 200."}
+},
+{
+ id:"ch6", emoji:"🎵", title:"How a Sukta is built",
+ short:"Every hymn has a seer, a god and a rhythm.",
+ body:`
+<p class="lead">Every sukta comes with an <b>ID card</b> of three things. Chanters learn these before chanting.</p>
+<div class="facts">
+<div class="fact"><small>Ṛṣi</small><div>Who "saw" it — the seer</div></div>
+<div class="fact"><small>Devatā</small><div>Who it praises — the god or topic</div></div>
+<div class="fact"><small>Chandas</small><div>Its rhythm — the meter</div></div>
+</div>
+<h2>Meters — the beat of the poem</h2>
+<p>Verses are measured by counting <b>syllables</b> (sounds like "ag-ni" = 2). Common meters:</p>
+<ul>
+<li><b>Gāyatrī</b> — 3 lines × 8 syllables = 24</li>
+<li><b>Anuṣṭubh</b> — 4 lines × 8 syllables = 32</li>
+<li><b>Triṣṭubh</b> — 4 lines × 11 syllables = 44 (the most common!)</li>
+<li><b>Jagatī</b> — 4 lines × 12 syllables = 48</li>
+</ul>
+<h2>How to read a sukta number</h2>
+<p>We write suktas like <b>3.62.10</b>. This means <b>Mandala 3</b>, <b>Sukta 62</b>, <b>Verse 10</b>. That address is the famous Gāyatrī Mantra!</p>
+<div class="box learn"><h4>🌱 Try it</h4>Clap the syllables of "tat-sa-vi-tur-va-re-ṇyam" — you just clapped 8 syllables, one line of Gāyatrī meter!</div>`,
+ quiz:{q:"What does 10.129 mean?",o:["Mandala 10, Sukta 129","Sukta 10, Verse 129","Page 10, Line 129"],a:0,why:"First number = Mandala, second = Sukta. 10.129 is the Nāsadīya Sukta about creation."}
+},
+{
+ id:"ch7", emoji:"🌳", title:"The Rigveda's Family Tree",
+ short:"Four Vedas, and the books that grew from them.",
+ body:`
+<p class="lead">The Rigveda is the eldest of <b>four Vedas</b>. Think of them as four siblings, each with a job.</p>
+<div class="grid">
+<div class="card"><div class="emo">📖</div><h3>Ṛgveda</h3><p>Hymns of praise — the oldest.</p></div>
+<div class="card"><div class="emo">🎶</div><h3>Sāmaveda</h3><p>Songs — many Rigveda verses set to melody.</p></div>
+<div class="card"><div class="emo">🪔</div><h3>Yajurveda</h3><p>Formulas for performing yajñas (fire rituals).</p></div>
+<div class="card"><div class="emo">🌿</div><h3>Atharvaveda</h3><p>Prayers for health, home and daily life.</p></div>
+</div>
+<h2>Layers of each Veda</h2>
+<p>Each Veda grew in layers, like a tree growing rings:</p>
+<ol>
+<li><b>Saṃhitā</b> — the hymns themselves (what this site is about)</li>
+<li><b>Brāhmaṇa</b> — explanations of rituals</li>
+<li><b>Āraṇyaka</b> — "forest books" for deep thinking</li>
+<li><b>Upaniṣad</b> — big questions about the Self and the universe</li>
+</ol>
+<p>The version of the Rigveda we have today is called the <b>Śākala</b> recension (branch). Other branches once existed but were mostly lost.</p>
+<div class="box know"><h4>💡 Did you know?</h4>Ideas from the Rigveda travelled far: Yoga, Ayurveda, music, and the Sanskrit language all have roots here.</div>`,
+ quiz:{q:"How many Vedas are there?",o:["Two","Four","Ten"],a:1,why:"Rig, Sama, Yajur and Atharva — four Vedas."}
+},
+{
+ id:"ch8", emoji:"🗺️", title:"Your Adventure Begins!",
+ short:"How to explore the suktas on this site.",
+ body:`
+<p class="lead">You now know the story of the Rigveda. Time to open the treasure box and meet the suktas one by one!</p>
+<h2>Every story sukta page has</h2>
+<ul>
+<li>🪪 The <b>ID card</b> — seer, god, meter and number of verses</li>
+<li>📖 The <b>story</b> told in simple words</li>
+<li>🕉️ A <b>key verse</b> in Sanskrit, with how to say it and what it means</li>
+<li>🌱 <b>Lessons</b> for everyday life</li>
+<li>⭐ A <b>quiz</b> to earn a star</li>
+<li>🔊 <b>Every mantra</b> of the sukta, with ▶ Listen, 🐢 Slow and 🔁 Repeat-after-me buttons</li>
+</ul>
+<h2>Tips for young explorers</h2>
+<ul>
+<li>Press <b>🔊 Read to me</b> to hear the story in English.</li>
+<li>All 1,028 suktas have a page with their mantras — find them under <b>10 Mandalas</b>.</li>
+<li>Use <b>🔁 Repeat after me</b>: the computer says a line, then waits for you to say it.</li>
+<li>Learn verses from a teacher or elder — Vedic chanting needs the right tones.</li>
+<li>The "simple meanings" are friendly explanations. Real scholars argue about exact meanings — that's part of the fun!</li>
+</ul>
+<div class="row" style="margin-top:16px"><a class="btn blue" href="#s1-1">Start with Sukta 1.1 →</a><a class="btn blue" href="#suktas" style="background:var(--green)">See all suktas</a></div>`,
+ quiz:{q:"What is the best way to learn to chant a Vedic verse correctly?",o:["Guess the tune","Learn from a teacher or elder","Shout it loudly"],a:1,why:"The Vedas were always passed from teacher to student."}
+}
+];
+
+/* ---------------- DATA: MANDALAS ---------------- */
+const MANDALAS = [
+ {n:1,count:191,who:"Many seers — Madhucchandas, Medhātithi, Dīrghatamas, Agastya and more",about:"Opens with the hymn to Agni. A big mixed book, collected after the Family Books.",emoji:"🔥"},
+ {n:2,count:43,who:"Gṛtsamada family",about:"A Family Book. Short and strong hymns, many to Agni and Indra.",emoji:"⚡"},
+ {n:3,count:62,who:"Viśvāmitra family",about:"Home of the Gāyatrī Mantra and the story of the talking rivers.",emoji:"🌞"},
+ {n:4,count:58,who:"Vāmadeva family",about:"A Family Book with many hymns about Agni, Indra and the Ṛbhus (skilled craftsmen).",emoji:"🛠️"},
+ {n:5,count:87,who:"Atri family",about:"A Family Book with lovely hymns to Uṣas, the Maruts and Mitra-Varuṇa.",emoji:"🌅"},
+ {n:6,count:75,who:"Bharadvāja family",about:"A Family Book with hymns to Indra, Agni and Pūṣan, the god of paths.",emoji:"🛤️"},
+ {n:7,count:104,who:"Vasiṣṭha family",about:"Famous for hymns to Varuṇa, the Frog hymn and the Mahāmṛtyuñjaya mantra.",emoji:"🐸"},
+ {n:8,count:103,who:"Kaṇva and Āṅgirasa families",about:"Lively hymns, mostly in short meters. Includes 11 extra 'Vālakhilya' hymns.",emoji:"🎶"},
+ {n:9,count:114,who:"Many seers",about:"Every single hymn is for Soma Pavamāna — Soma being purified.",emoji:"🌿"},
+ {n:10,count:191,who:"Many seers, including women seers",about:"The newest book. Big questions: creation, the cosmic Person, healing plants, unity.",emoji:"🌌"}
+];
+
+/* ---------------- DATA: SUKTAS ---------------- */
+const SUKTAS = [
+{id:"1-1",title:"Agni Sukta",nick:"The Very First Hymn",emoji:"🔥",deity:"Agni (Fire)",rishi:"Madhucchandas Vaiśvāmitra",verses:9,meter:"Gāyatrī",
+ story:`<p>The whole Rigveda begins with one word: <b>Agni</b> — Fire! Long ago, families gathered around a fire every day. The fire gave warmth, light and cooked food. But the rishis saw something more.</p><p>They called Agni the <b>"purohita"</b> — the one placed in front. When people offered ghee or grain into the fire, Agni carried it up as smoke to the gods, like a <b>messenger</b> or a postman of the sky. In return, the gods sent blessings back down.</p><p>The hymn ends sweetly: <i>"Be easy to reach for us, O Agni, like a father is for his son."</i></p>`,
+ verse:{ref:"1.1.1",dev:"अग्निमीळे पुरोहितं यज्ञस्य देवमृत्विजम् ।<br>होतारं रत्नधातमम् ॥",iast:"agnim īḷe purohitaṃ yajñasya devam ṛtvijam | hotāraṃ ratnadhātamam ||",mean:"I praise Agni, the Fire, who stands in front of our worship, the shining priest who calls the gods, and who gives the greatest treasures."},
+ lessons:["Begin good work with gratitude.","Like fire, be a helper who connects people.","A father loves his child — the rishis felt the divine was that close."],
+ fun:"Because Agni is the first word, many people say the whole Rigveda 'starts with fire and light'.",
+ quiz:{q:"Agni is called a messenger because...",o:["He delivers letters","He carries offerings to the gods","He runs fast"],a:1}},
+
+{id:"1-32",title:"Indra and Vṛtra",nick:"The Dragon and the Rivers",emoji:"⚡",deity:"Indra",rishi:"Hiraṇyastūpa Āṅgirasa",verses:15,meter:"Triṣṭubh",
+ story:`<p>Once there was a giant serpent named <b>Vṛtra</b>. Vṛtra means "the one who blocks". He curled himself around the mountains and <b>trapped all the waters</b>. No rivers flowed. Fields became dry. People and cows were thirsty.</p><p>Then <b>Indra</b>, the brave god of thunder, drank Soma for strength, picked up his thunderbolt called the <b>Vajra</b>, made by the craftsman Tvaṣṭṛ, and fought Vṛtra. With a great crash, he struck the serpent!</p><p>The mountains split open and the waters rushed out <b>like cows running to their calves</b>. The rivers flowed down to the sea, and life returned to the land.</p>`,
+ verse:{ref:"1.32.1",dev:"इन्द्रस्य नु वीर्याणि प्र वोचं यानि चकार प्रथमानि वज्री ।<br>अहन्नहिमन्वपस्ततर्द प्र वक्षणा अभिनत्पर्वतानाम् ॥",iast:"indrasya nu vīryāṇi pra vocaṃ yāni cakāra prathamāni vajrī | ahann ahim anv apas tatarda pra vakṣaṇā abhinat parvatānām ||",mean:"Now I will tell the brave deeds of Indra, the first ones he did with his thunderbolt: he struck the serpent, set the waters free, and broke open the bellies of the mountains."},
+ lessons:["Courage can free what is stuck.","Many people see this as a story about monsoon clouds that 'hold' rain until thunder breaks them open.","Sharing water and resources brings life to everyone."],
+ fun:"The idea of a hero fighting a dragon to free water appears in stories from many ancient cultures.",
+ quiz:{q:"What did Vṛtra trap?",o:["The Sun","The waters","The cows only"],a:1}},
+
+{id:"1-50",title:"Sūrya Sukta",nick:"Hello, Sun!",emoji:"☀️",deity:"Sūrya (Sun)",rishi:"Praskaṇva Kāṇva",verses:13,meter:"Mostly Gāyatrī",
+ story:`<p>Every morning something magical happens. The stars slip away "like thieves" in the night, and the <b>Sun</b> rises so that <b>everyone in the world can see</b>.</p><p>The rishi imagines the Sun riding a chariot pulled by <b>seven shining horses</b>. His rays are like flags announcing that a new day has come.</p><p>At the end the poet asks the Sun to <b>take away sickness</b> and give good health — just like we feel better on a warm sunny morning.</p>`,
+ verse:{ref:"1.50.1",dev:"उदु त्यं जातवेदसं देवं वहन्ति केतवः ।<br>दृशे विश्वाय सूर्यम् ॥",iast:"ud u tyaṃ jātavedasaṃ devaṃ vahanti ketavaḥ | dṛśe viśvāya sūryam ||",mean:"His rays, like bright flags, carry the all-knowing god Sūrya up into the sky, so that the whole world may see."},
+ lessons:["Sunlight is a gift for everyone — rich or poor.","Wake up and greet the day with joy.","Light helps us see clearly; knowledge is a kind of light too."],
+ fun:"The seven horses are often linked to the seven colours of the rainbow, hidden inside white sunlight.",
+ quiz:{q:"How many horses pull the Sun's chariot?",o:["Three","Seven","Ten"],a:1}},
+
+{id:"1-89",title:"Ā no bhadrāḥ",nick:"Let Good Thoughts Come From Everywhere",emoji:"🌍",deity:"Viśvedevas (All gods)",rishi:"Gotama Rāhūgaṇa",verses:10,meter:"Mostly Jagatī",
+ story:`<p>This hymn is like opening every window in your house to let in fresh air. The rishi prays: <b>"Let noble thoughts come to us from every side!"</b></p><p>It is a prayer to all the gods together, asking for a long, healthy life of a hundred years, good friends, and a peaceful mind.</p><p>A famous verse in it asks: <i>"May we hear good things with our ears, and see good things with our eyes."</i> Many schools in India begin their day with this prayer.</p>`,
+ verse:{ref:"1.89.1",dev:"आ नो भद्राः क्रतवो यन्तु विश्वतः ...",iast:"ā no bhadrāḥ kratavo yantu viśvataḥ ...",mean:"Let good and noble thoughts come to us from all directions."},
+ lessons:["Good ideas can come from anyone, anywhere — keep an open mind.","Choose to listen to and look at good things.","Learning is better when we welcome many points of view."],
+ fun:"This line is the motto of many institutions, and it's often quoted to celebrate openness to the world.",
+ quiz:{q:"What does this hymn ask for from every side?",o:["Gold","Good thoughts","Rain"],a:1}},
+
+{id:"1-113",title:"Uṣas Sukta",nick:"The Goddess of Dawn",emoji:"🌅",deity:"Uṣas (Dawn)",rishi:"Kutsa Āṅgirasa",verses:20,meter:"Triṣṭubh",
+ story:`<p>Before the Sun comes up, the sky turns pink and gold. The rishis saw this as a beautiful goddess, <b>Uṣas</b>, the Dawn.</p><p>She is the <b>sister of Night</b>. The two sisters take turns: Night lets everyone rest, and Dawn wakes them up — the birds, the cows, the farmers and the children. They never fight; they share the same road through the sky.</p><p>The poet also notices something wise: dawn after dawn keeps coming, the same for our grandparents and for us. So we should <b>use each new day well</b>.</p>`,
+ verse:{ref:"1.113.1",dev:"इदं श्रेष्ठं ज्योतिषां ज्योतिरागाच्चित्रः प्रकेतो अजनिष्ट विभ्वा ।",iast:"idaṃ śreṣṭhaṃ jyotiṣāṃ jyotir āgāc citraḥ praketo ajaniṣṭa vibhvā |",mean:"Here comes the best of all lights! A bright, wonderful sign has been born, spreading far and wide."},
+ lessons:["Each morning is a fresh start.","Night and Day share without fighting — so can we.","Time passes, so do good things today."],
+ fun:"Uṣas is related to words for dawn in other languages, like 'Eos' in Greek and 'Aurora' in Latin.",
+ quiz:{q:"Who is Uṣas's sister?",o:["Night","Rain","Earth"],a:0}},
+
+{id:"1-164",title:"Asya Vāmasya",nick:"The Riddle Hymn",emoji:"🧩",deity:"Viśvedevas (All gods)",rishi:"Dīrghatamas Aucathya",verses:52,meter:"Mixed",
+ story:`<p>This is one of the longest and most puzzling hymns — full of <b>riddles</b>! For example: <i>a wheel with twelve spokes</i> (the 12 months), and <i>two birds sitting on one tree — one eats the fruit, the other just watches</i>.</p><p>The poet, Dīrghatamas, was said to be blind, yet he "saw" deep truths.</p><p>The most famous line says: <b>"Truth is One; the wise call it by many names."</b> Agni, Indra, Varuṇa — maybe they are different names for the same great reality.</p>`,
+ verse:{ref:"1.164.46",dev:"इन्द्रं मित्रं वरुणमग्निमाहुरथो दिव्यः स सुपर्णो गरुत्मान् ।<br>एकं सद्विप्रा बहुधा वदन्त्यग्निं यमं मातरिश्वानमाहुः ॥",iast:"indraṃ mitraṃ varuṇam agnim āhur atho divyaḥ sa suparṇo garutmān | ekaṃ sad viprā bahudhā vadanty agniṃ yamaṃ mātariśvānam āhuḥ ||",mean:"They call it Indra, Mitra, Varuṇa, Agni, and the heavenly bird Garutmān. Truth is One — the wise speak of it in many ways."},
+ lessons:["Different people may describe the same truth differently.","Respect others' paths and names for God.","Riddles train the mind to think deeply."],
+ fun:"The 'two birds on one tree' idea was later used in the Upaniṣads to talk about the self.",
+ quiz:{q:"'Ekam sat viprā bahudhā vadanti' means...",o:["Truth is one, the wise call it by many names","There are many truths","Only one name is right"],a:0}},
+
+{id:"2-12",title:"Sa Janāsa Indraḥ",nick:"Who Is Indra? (A Guessing Song)",emoji:"🦸",deity:"Indra",rishi:"Gṛtsamada",verses:15,meter:"Triṣṭubh",
+ story:`<p>This hymn plays a fun game. Every verse describes a great deed — <i>who steadied the shaking earth? who calmed the mountains? who set the rivers flowing? who brought back the stolen cows?</i> — and then answers with the same chorus:</p><p><b>"O people, that is Indra!"</b> (<i>sa janāsa indraḥ</i>)</p><p>It was also an answer to people who doubted: some asked, "Where is he? Does he even exist?" The poet answers by pointing to all the wonders in the world.</p>`,
+ verse:{ref:"2.12.1 (part)",dev:"यो जात एव प्रथमो मनस्वान्देवो देवान्क्रतुना पर्यभूषत् ।<br>... स जनास इन्द्रः ॥",iast:"yo jāta eva prathamo manasvān devo devān kratunā paryabhūṣat | ... sa janāsa indraḥ ||",mean:"He who, as soon as he was born, was the first and wisest, and protected the gods with his power — O people, that is Indra!"},
+ lessons:["Doubting and asking questions is allowed — even the Rigveda mentions doubters.","Look at the wonders around you for answers.","A repeating chorus makes things easy to remember."],
+ fun:"The repeated line works like the chorus of a song — perfect for memorising!",
+ quiz:{q:"What is the repeated chorus of this hymn?",o:["O people, that is Indra!","Fire is first","Let there be light"],a:0}},
+
+{id:"3-33",title:"Viśvāmitra and the Rivers",nick:"The Talking Rivers",emoji:"🏞️",deity:"The rivers Vipāś and Śutudrī",rishi:"Viśvāmitra",verses:13,meter:"Mostly Triṣṭubh",
+ story:`<p>This hymn is a <b>conversation</b>! The rishi Viśvāmitra and his people, the Bharatas, needed to cross two big rivers — the <b>Vipāś</b> (today's Beas) and the <b>Śutudrī</b> (today's Sutlej). The rivers were rushing like two horses racing from the mountains.</p><p>Viśvāmitra spoke to them politely: <i>"Sisters, please listen. Let us cross."</i> At first the rivers said, "We follow the path Indra dug for us. We can't stop!"</p><p>But Viśvāmitra asked so kindly that the rivers agreed. <b>They lowered themselves</b> like a mother bending down to feed her child, and everyone crossed safely.</p>`,
+ verse:{ref:"3.33.1 (part)",dev:"प्र पर्वतानामुशती उपस्थादश्वे इव विषिते हासमाने ।",iast:"pra parvatānām uśatī upasthād aśve iva viṣite hāsamāne |",mean:"Out from the lap of the mountains, eager, like two mares set free and racing, the rivers rush forward."},
+ lessons:["Speaking politely can solve big problems.","Respect nature — rivers are like mothers.","Listen to the other side, even when it's a river!"],
+ fun:"These are real rivers you can still visit in Punjab and Himachal Pradesh today.",
+ quiz:{q:"How did Viśvāmitra get the rivers to help?",o:["He shouted at them","He asked kindly","He built a bridge"],a:1}},
+
+{id:"3-62",title:"The Gāyatrī Mantra",nick:"The Mother of Mantras",emoji:"🌞",deity:"Savitṛ (the Sun as inspirer) — in verse 10",rishi:"Viśvāmitra",verses:18,meter:"Gāyatrī",
+ story:`<p>Hidden inside sukta 3.62, at verse 10, is the most famous mantra in India: the <b>Gāyatrī Mantra</b>.</p><p>It is a prayer to <b>Savitṛ</b>, the Sun as the power that wakes up and inspires everything. But notice what it asks for — not money, not toys, but a <b>bright mind</b>. It asks the divine light to <b>guide our thinking</b>.</p><p>Millions of people chant it every morning. The words "Om bhūr bhuvaḥ svaḥ" that people often add at the start come from other Vedic texts; the Rigveda verse itself starts with "tat savitur".</p>`,
+ verse:{ref:"3.62.10",dev:"तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि ।<br>धियो यो नः प्रचोदयात् ॥",iast:"tat savitur vareṇyaṃ bhargo devasya dhīmahi | dhiyo yo naḥ pracodayāt ||",mean:"We think about the wonderful, shining light of the god Savitṛ. May that light inspire and guide our minds."},
+ lessons:["The best thing to pray for is a good, clear mind.","Light outside reminds us to find light inside.","Say 'our minds', not 'my mind' — wish good for everyone."],
+ fun:"The mantra is in the Gāyatrī meter — 3 lines of 8 syllables — and that's where its name comes from!",
+ quiz:{q:"What does the Gāyatrī Mantra ask for?",o:["Wealth","A bright, guided mind","Rain"],a:1}},
+
+{id:"7-59",title:"Mahāmṛtyuñjaya Mantra",nick:"The Ripe Cucumber Prayer",emoji:"🥒",deity:"Rudra (Tryambaka) — in verse 12",rishi:"Vasiṣṭha",verses:12,meter:"Anuṣṭubh (verse 12)",
+ story:`<p>This sukta is mostly for the <b>Maruts</b>, the storm gods. Its last verse is a famous healing prayer to <b>Rudra</b>, the "three-eyed one" (Tryambaka).</p><p>It uses a lovely picture from the garden: a <b>ripe cucumber</b> (urvāruka). When it's ready, it comes off its vine easily, without being torn.</p><p>The prayer asks: just like that, may we be freed from fear and harm easily and gently, and be held close to what is everlasting. People chant it for health and courage.</p>`,
+ verse:{ref:"7.59.12",dev:"त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् ।<br>उर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात् ॥",iast:"tryambakaṃ yajāmahe sugandhiṃ puṣṭivardhanam | urvārukam iva bandhanān mṛtyor mukṣīya māmṛtāt ||",mean:"We worship the three-eyed one, who is fragrant and makes us strong. Like a ripe cucumber freed from its vine, may we be freed from harm — and never from the everlasting."},
+ lessons:["Nature gives us wise examples — even a cucumber!","Praying for health and courage is a beautiful habit.","Growing 'ripe' means growing wise and calm."],
+ fun:"This mantra appears in the Yajurveda too, and is still one of the most chanted verses today.",
+ quiz:{q:"What fruit is used as an example in this mantra?",o:["Mango","Cucumber","Banana"],a:1}},
+
+{id:"7-86",title:"Vasiṣṭha's Prayer to Varuṇa",nick:"Saying Sorry",emoji:"🌊",deity:"Varuṇa",rishi:"Vasiṣṭha",verses:8,meter:"Triṣṭubh",
+ story:`<p>Varuṇa is the god who keeps <b>Ṛta</b> — the order and truth of the world. He holds the sky and earth apart and sees everything.</p><p>In this hymn, the great rishi Vasiṣṭha feels sad. He thinks he has done something wrong and that Varuṇa is upset. He asks, <i>"What was my mistake? Why are you angry with your friend?"</i></p><p>He honestly says that sometimes we go wrong because of anger, carelessness or not thinking. Then he <b>asks for forgiveness</b> and promises to do better.</p>`,
+ verse:{ref:"7.86.1 (part)",dev:"धीरा त्वस्य महिना जनूंषि वि यस्तस्तम्भ रोदसी चिदुर्वी ।",iast:"dhīrā tv asya mahinā janūṃṣi vi yas tastambha rodasī cid urvī |",mean:"Wise indeed are the works of Varuṇa, who by his greatness propped apart the wide sky and earth."},
+ lessons:["Even great people make mistakes.","Saying sorry honestly takes courage.","Truth and fairness hold the world together."],
+ fun:"This is one of the earliest poems in the world about feeling guilty and asking forgiveness.",
+ quiz:{q:"What does Vasiṣṭha ask Varuṇa for?",o:["Forgiveness","A chariot","Gold"],a:0}},
+
+{id:"7-103",title:"Maṇḍūka Sukta",nick:"The Frog Song",emoji:"🐸",deity:"Frogs (Maṇḍūkas)",rishi:"Vasiṣṭha",verses:10,meter:"Anuṣṭubh & Triṣṭubh",
+ story:`<p>Yes — there's a whole hymn about <b>frogs</b>! 🐸</p><p>All through the hot dry season, frogs lie quietly in the mud like students keeping a vow of silence. Then the <b>monsoon rain</b> comes. The frogs wake up and start croaking — "croak! croak!" — one frog repeats the sound of another, like a student repeating after the teacher.</p><p>The poet smiles and compares their croaking to priests chanting together. Some frogs are green, some are spotted, but they all sing together to welcome the rain.</p>`,
+ verse:{ref:"7.103.1",dev:"संवत्सरं शशयाना ब्राह्मणा व्रतचारिणः ।<br>वाचं पर्जन्यजिन्वितां प्र मण्डूका अवादिषुः ॥",iast:"saṃvatsaraṃ śaśayānā brāhmaṇā vratacāriṇaḥ | vācaṃ parjanyajinvitāṃ pra maṇḍūkā avādiṣuḥ ||",mean:"After lying quiet all year, like priests keeping a vow, the frogs raise their voices, awakened by the rain-god Parjanya."},
+ lessons:["Even small creatures are worth a song.","Rain is a celebration of life.","Learning by repeating (like frogs!) is how the Vedas were learned."],
+ fun:"This hymn shows the rishis had a great sense of humour and loved watching nature closely.",
+ quiz:{q:"What wakes the frogs up?",o:["The Sun","The rain","A drum"],a:1}},
+
+{id:"9-1",title:"Soma Pavamāna",nick:"The Flowing Drink",emoji:"🌿",deity:"Soma Pavamāna",rishi:"Madhucchandas Vaiśvāmitra",verses:10,meter:"Gāyatrī",
+ story:`<p>Mandala 9 is the only book where <b>every hymn is for one god</b>: <b>Soma</b>.</p><p>Soma was a special plant. Its juice was pressed with stones, strained through sheep's wool and mixed with milk, then offered in the fire ritual. As the juice flowed through the strainer, the priests sang to it: "Flow, O Soma!"</p><p>Soma was believed to give strength to Indra and inspiration to poets. Nobody today knows for sure which plant Soma was — it's one of the great mysteries of history!</p>`,
+ verse:{ref:"9.1.1",dev:"स्वादिष्ठया मदिष्ठया पवस्व सोम धारया ।<br>इन्द्राय पातवे सुतः ॥",iast:"svādiṣṭhayā madiṣṭhayā pavasva soma dhārayā | indrāya pātave sutaḥ ||",mean:"Flow, O Soma, in your sweetest, most joyful stream, pressed for Indra to drink."},
+ lessons:["Things become pure by being 'filtered' — like good habits filter our thoughts.","Mysteries make history exciting.","Careful work — pressing, straining, mixing — makes something special."],
+ fun:"'Pavamāna' means 'being made pure'. The word 'pavitra' (pure) comes from the same root.",
+ quiz:{q:"Which Mandala is entirely about Soma?",o:["Mandala 1","Mandala 9","Mandala 10"],a:1}},
+
+{id:"10-34",title:"The Gambler's Hymn",nick:"Don't Play With Dice!",emoji:"🎲",deity:"Dice; Savitṛ (advice)",rishi:"Kavaṣa Ailūṣa",verses:14,meter:"Triṣṭubh",
+ story:`<p>This is a sad but very honest story, told by a gambler himself.</p><p>He loved playing with dice. He kept saying, "Just one more game! I'll win this time!" But he kept losing. He lost his money, and his family became unhappy. Even his friends stayed away.</p><p>Then the god Savitṛ gives him advice: <b>"Don't play with dice. Plough your field! Be happy with what you earn."</b> Look after your cows and your family.</p>`,
+ verse:{ref:"10.34.13 (part)",dev:"अक्षैर्मा दीव्यः कृषिमित्कृषस्व वित्ते रमस्व बहु मन्यमानः ।",iast:"akṣair mā dīvyaḥ kṛṣim it kṛṣasva vitte ramasva bahu manyamānaḥ |",mean:"Don't play with dice — plough your field! Enjoy what you have earned, and value it."},
+ lessons:["Hard work is better than shortcuts.","'Just one more' habits can trap us — know when to stop.","Be content with what you earn honestly."],
+ fun:"This is one of the oldest poems in the world about a bad habit — and how to break it.",
+ quiz:{q:"What advice does the hymn give the gambler?",o:["Play more","Plough your field","Buy new dice"],a:1}},
+
+{id:"10-75",title:"Nadī Sukta",nick:"The River Song",emoji:"🌊",deity:"The Rivers, especially Sindhu",rishi:"Sindhukṣit Praiyamedha",verses:9,meter:"Jagatī",
+ story:`<p>This hymn is like an ancient <b>map made of music</b>. It names the rivers one after another — Gaṅgā, Yamunā, Sarasvatī, Śutudrī and more — from east to west.</p><p>The star of the song is the <b>Sindhu</b> (Indus). The poet says she roars louder than all the others, rushing like a bull, rich in horses, chariots and gold, with her thunder rising up to the sky.</p><p>The rishis loved their rivers because rivers gave water for crops, animals and people.</p>`,
+ verse:{ref:"10.75.5 (part)",dev:"इमं मे गङ्गे यमुने सरस्वति शुतुद्रि स्तोमं सचता परुष्ण्या ।",iast:"imaṃ me gaṅge yamune sarasvati śutudri stomaṃ sacatā paruṣṇyā |",mean:"O Gaṅgā, Yamunā, Sarasvatī, Śutudrī, with Paruṣṇī — accept this song of mine!"},
+ lessons:["Rivers are precious — keep them clean.","Knowing your land's geography is part of knowing your heritage.","Be thankful to nature for food and water."],
+ fun:"This is one of the earliest mentions of the Gaṅgā river in any text.",
+ quiz:{q:"Which river is praised most in this hymn?",o:["Gaṅgā","Sindhu","Yamunā"],a:1}},
+
+{id:"10-90",title:"Puruṣa Sukta",nick:"The Giant Cosmic Person",emoji:"🌌",deity:"Puruṣa (Cosmic Being)",rishi:"Nārāyaṇa",verses:16,meter:"Anuṣṭubh (last verse Triṣṭubh)",
+ story:`<p>Imagine a being <b>so huge</b> that he has a thousand heads, a thousand eyes and a thousand feet. He covers the whole earth — and still reaches beyond it! This is the <b>Puruṣa</b>, the Cosmic Person.</p><p>The hymn says that <b>all of creation comes from this one being</b>: the Moon from his mind, the Sun from his eyes, the wind from his breath, the sky from his head and the earth from his feet.</p><p>The message: <b>everything is connected</b>, like parts of one big body. One verse describes groups of society as coming from different parts of the Puruṣa; people today discuss and debate what that verse meant and how it was used.</p>`,
+ verse:{ref:"10.90.1",dev:"सहस्रशीर्षा पुरुषः सहस्राक्षः सहस्रपात् ।<br>स भूमिं विश्वतो वृत्वात्यतिष्ठद्दशाङ्गुलम् ॥",iast:"sahasraśīrṣā puruṣaḥ sahasrākṣaḥ sahasrapāt | sa bhūmiṃ viśvato vṛtvāty atiṣṭhad daśāṅgulam ||",mean:"The Cosmic Person has a thousand heads, a thousand eyes, a thousand feet. He covers the earth on all sides, and stretches ten fingers beyond it."},
+ lessons:["The whole universe is like one family or one body.","Every part matters — a body needs both head and feet.","Big ideas should be thought about carefully and discussed."],
+ fun:"'Thousand' here doesn't mean exactly 1,000 — it means 'countless'!",
+ quiz:{q:"In this hymn, the Sun comes from the Puruṣa's...",o:["Feet","Eyes","Hands"],a:1}},
+
+{id:"10-97",title:"Oṣadhī Sukta",nick:"The Healing Plants",emoji:"🌱",deity:"Oṣadhīs (Healing plants)",rishi:"Bhiṣag Ātharvaṇa",verses:23,meter:"Anuṣṭubh",
+ story:`<p>The seer of this hymn is called <b>Bhiṣag</b> — which means <b>"doctor"</b>! He sings to the <b>healing plants</b>.</p><p>He calls the plants <b>"mothers"</b>, and says there are hundreds of kinds, born long, long ago. Some have flowers, some have fruit, some have neither — but all can help.</p><p>He asks the plants to work together like a team to drive away sickness from every part of the body. This hymn is one of the early seeds of the healing tradition later called <b>Āyurveda</b>.</p>`,
+ verse:{ref:"10.97.1",dev:"या ओषधीः पूर्वा जाता देवेभ्यस्त्रियुगं पुरा ।<br>मनै नु बभ्रूणामहं शतं धामानि सप्त च ॥",iast:"yā oṣadhīḥ pūrvā jātā devebhyas triyugaṃ purā | manai nu babhrūṇām ahaṃ śataṃ dhāmāni sapta ca ||",mean:"The healing plants that were born long ago, three ages before the gods — I think of these brown plants and their hundred and seven homes."},
+ lessons:["Plants are precious — many medicines come from them.","Doctors and healers deserve respect.","Teamwork heals, even among plants!"],
+ fun:"Turmeric (haldi) and tulsi, used in Indian homes today, belong to the same old love of healing plants.",
+ quiz:{q:"What does 'Bhiṣag' mean?",o:["Farmer","Doctor","King"],a:1}},
+
+{id:"10-121",title:"Hiraṇyagarbha Sukta",nick:"The Golden Egg",emoji:"🥚",deity:"Hiraṇyagarbha / Prajāpati",rishi:"Hiraṇyagarbha Prājāpatya",verses:10,meter:"Triṣṭubh",
+ story:`<p>In the very beginning, says this hymn, there appeared a <b>Golden Womb</b> or <b>Golden Egg</b> — <b>Hiraṇyagarbha</b>. From it came the one Lord of everything.</p><p>He holds up the earth and the sky. The snowy mountains, the oceans and the rivers show his greatness. He gives life and strength.</p><p>Every verse ends with a beautiful question: <b>"To which god shall we offer our worship?"</b> (<i>kasmai devāya haviṣā vidhema</i>). The answer, at the end: to <b>Prajāpati</b>, the Lord of all creatures.</p>`,
+ verse:{ref:"10.121.1",dev:"हिरण्यगर्भः समवर्तताग्रे भूतस्य जातः पतिरेक आसीत् ।<br>स दाधार पृथिवीं द्यामुतेमां कस्मै देवाय हविषा विधेम ॥",iast:"hiraṇyagarbhaḥ sam avartatāgre bhūtasya jātaḥ patir eka āsīt | sa dādhāra pṛthivīṃ dyām utemāṃ kasmai devāya haviṣā vidhema ||",mean:"In the beginning the Golden Egg appeared. Once born, he was the one Lord of all that exists. He holds up the earth and this sky. To which god shall we offer our worship?"},
+ lessons:["Asking 'who?' and 'why?' is how wisdom begins.","Mountains, seas and skies can fill us with wonder.","Everything may come from one source."],
+ fun:"The word 'Hiraṇya' means gold. Scientists today also talk about the universe starting from one tiny, very hot point!",
+ quiz:{q:"What is 'Hiraṇyagarbha'?",o:["Golden Egg / Womb","Silver river","Golden chariot"],a:0}},
+
+{id:"10-125",title:"Devī Sukta (Vāk Sukta)",nick:"I Am the Power of Speech",emoji:"🗣️",deity:"Vāk (Goddess of Speech)",rishi:"Vāk Āmbhṛṇī (a woman seer)",verses:8,meter:"Triṣṭubh",
+ story:`<p>This hymn was given by a <b>woman seer</b>, Vāk, daughter of the sage Ambhṛṇa. And it's special because the goddess speaks in her <b>own voice</b>: "I am…"</p><p>She says: <i>"I move with all the gods. I am the queen. I give wealth. Through me people eat, see, breathe and hear."</i> She is the power behind speech, knowledge and the whole universe.</p><p>Later this hymn became very important in the worship of the Goddess (Devī), and is still chanted during Navarātri.</p>`,
+ verse:{ref:"10.125.1 (part)",dev:"अहं रुद्रेभिर्वसुभिश्चराम्यहमादित्यैरुत विश्वदेवैः ।",iast:"ahaṃ rudrebhir vasubhiś carāmy aham ādityair uta viśvadevaiḥ |",mean:"I move with the Rudras and the Vasus; I move with the Ādityas and all the gods."},
+ lessons:["Words are powerful — use them kindly.","Women were seers and teachers in Vedic times.","Confidence: it's okay to know your strength."],
+ fun:"'Vāk' is related to words like 'voice' and 'vocal' in English!",
+ quiz:{q:"Who gave us the Devī Sukta?",o:["A king","A woman seer named Vāk","A frog"],a:1}},
+
+{id:"10-129",title:"Nāsadīya Sukta",nick:"The Creation Mystery",emoji:"🌠",deity:"Creation (Bhāvavṛtta)",rishi:"Prajāpati Parameṣṭhin",verses:7,meter:"Triṣṭubh",
+ story:`<p>This is perhaps the <b>most curious</b> hymn ever written. It asks: <b>What was there before anything existed?</b></p><p>It says: there was no "something" and no "nothing". No sky, no air, no death, no life, no night or day. Only darkness hidden in darkness. Then, from the power of heat and desire, the <b>One</b> began to stir.</p><p>And the ending is amazing. The rishi says: <i>"Who really knows how it all began? Maybe the one who watches from the highest heaven knows — or <b>maybe even he does not know</b>."</i> The Rigveda is not afraid to say: <b>"We are not sure!"</b></p>`,
+ verse:{ref:"10.129.1 (part)",dev:"नासदासीन्नो सदासीत्तदानीं नासीद्रजो नो व्योमा परो यत् ।",iast:"nāsad āsīn no sad āsīt tadānīṃ nāsīd rajo no vyomā paro yat |",mean:"Then, there was neither non-existence nor existence. There was no air, and no sky beyond it."},
+ lessons:["It's okay — even wise — to say 'I don't know'.","Big questions make great scientists and philosophers.","Keep wondering about the universe!"],
+ fun:"Famous scientists and writers have loved this hymn because it sounds like a real scientific question.",
+ quiz:{q:"How does the Nāsadīya Sukta end?",o:["With a clear answer","Saying maybe even the highest one does not know","With a battle"],a:1}},
+
+{id:"10-146",title:"Araṇyānī Sukta",nick:"The Forest Lady",emoji:"🌲",deity:"Araṇyānī (Goddess of the Forest)",rishi:"Devamuni Airammada",verses:6,meter:"Anuṣṭubh",
+ story:`<p>Have you ever walked in a forest at dusk? It's a little spooky! You hear strange sounds: one animal calls like a cow, another answers like a bell, it sounds like someone is chopping wood or calling a cow home.</p><p>The rishi speaks to <b>Araṇyānī</b>, the shy Lady of the Forest, who seems to vanish as you look for her. He reassures us: <b>"The forest does not hurt anyone</b>, unless someone attacks. She lives on sweet fruits and gives food without needing to farm."</p><p>She is the <b>mother of wild animals</b>, smelling sweetly of balm.</p>`,
+ verse:{ref:"10.146.1",dev:"अरण्यान्यरण्यान्यसौ या प्रेव नश्यसि ।<br>कथा ग्रामं न पृच्छसि न त्वा भीरिव विन्दती ॥",iast:"araṇyāny araṇyāny asau yā preva naśyasi | kathā grāmaṃ na pṛcchasi na tvā bhīr iva vindatī ||",mean:"Lady of the Forest, Lady of the Forest, you seem to disappear! Why don't you ask the way to the village? Aren't you afraid out there?"},
+ lessons:["Forests are homes, not just trees — protect them.","What seems scary is often just unfamiliar.","Nature gives food freely; be grateful."],
+ fun:"This may be one of the first nature poems about a forest in the world.",
+ quiz:{q:"Araṇyānī is the goddess of the...",o:["Ocean","Forest","Mountain"],a:1}},
+
+{id:"10-191",title:"Saṃjñāna Sukta",nick:"Together! (The Last Hymn)",emoji:"🤝",deity:"Agni (v.1); Unity (v.2–4)",rishi:"Saṃvanana Āṅgirasa",verses:4,meter:"Anuṣṭubh (v.3 Triṣṭubh)",
+ story:`<p>The Rigveda began with Agni — and its <b>very last hymn</b> also begins with Agni. But then it gives a message for all people:</p><p><b>"Walk together. Speak together. Let your minds think together."</b></p><p>It ends with the wish that our hearts, our intentions and our goals be united, so that we all live happily together. What a perfect ending for a book that took so many families and generations to make!</p>`,
+ verse:{ref:"10.191.2",dev:"सं गच्छध्वं सं वदध्वं सं वो मनांसि जानताम् ।<br>देवा भागं यथा पूर्वे संजानाना उपासते ॥",iast:"saṃ gacchadhvaṃ saṃ vadadhvaṃ saṃ vo manāṃsi jānatām | devā bhāgaṃ yathā pūrve saṃjānānā upāsate ||",mean:"Walk together, speak together, let your minds be in harmony — just as the gods of old shared their portions in agreement."},
+ lessons:["Teamwork makes everything better.","Listen to each other before deciding.","Unity doesn't mean being the same — it means caring together."],
+ fun:"The Rigveda starts with 'Agni' and its last hymn's message is 'together' — light and unity!",
+ quiz:{q:"What is the main message of the last hymn?",o:["Be the strongest","Walk and think together","Stay alone"],a:1}}
+];
+
+/* ---------------- STATE ---------------- */
+const app = document.getElementById('app');
+let solved = {};
+try { solved = JSON.parse(localStorage.getItem('rv-solved')||'{}') || {}; } catch(e){ solved = {}; }
+function save(){ try{ localStorage.setItem('rv-solved', JSON.stringify(solved)); }catch(e){} }
+function updateStars(){ document.getElementById('stars').textContent = '⭐ ' + Object.keys(solved).length; }
+const byId = Object.fromEntries(SUKTAS.map(s=>[s.id,s]));
+const CH_ORDER = CHAPTERS.map(c=>({h:c.id,t:c.title,k:'Chapter'}));
+
+/* ---------------- DEVANAGARI → IAST ---------------- */
+const CONS={'क':'k','ख':'kh','ग':'g','घ':'gh','ङ':'ṅ','च':'c','छ':'ch','ज':'j','झ':'jh','ञ':'ñ','ट':'ṭ','ठ':'ṭh','ड':'ḍ','ढ':'ḍh','ण':'ṇ','त':'t','थ':'th','द':'d','ध':'dh','न':'n','प':'p','फ':'ph','ब':'b','भ':'bh','म':'m','य':'y','र':'r','ल':'l','व':'v','श':'ś','ष':'ṣ','स':'s','ह':'h','ळ':'ḷ'};
+const VOW={'अ':'a','आ':'ā','इ':'i','ई':'ī','उ':'u','ऊ':'ū','ऋ':'ṛ','ॠ':'ṝ','ऌ':'ḷ','ए':'e','ऐ':'ai','ओ':'o','औ':'au'};
+const MAT={'ा':'ā','ि':'i','ी':'ī','ु':'u','ू':'ū','ृ':'ṛ','ॄ':'ṝ','ॢ':'ḷ','े':'e','ै':'ai','ो':'o','ौ':'au'};
+const OTH={'ं':'ṃ','ः':'ḥ','ँ':'m̐','ऽ':"'",'।':'|','॥':'||','ॐ':'oṃ','०':'0','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9'};
+const isMark=c=>/[॑-॔᳐-᳿꣠-ꣿ़]/.test(c);
+function toIAST(s){
+  let o='';const a=[...s];
+  for(let i=0;i<a.length;i++){
+    const c=a[i];
+    if(isMark(c)) continue;
+    if(CONS[c]){
+      o+=CONS[c]; let j=i+1; while(j<a.length&&isMark(a[j])) j++;
+      const n=a[j];
+      if(n==='्'){ i=j; }
+      else if(MAT[n]){ o+=MAT[n]; i=j; }
+      else o+='a';
+    } else if(VOW[c]) o+=VOW[c];
+    else if(MAT[c]) o+=MAT[c];
+    else if(c==='्') {}
+    else if(OTH[c]!==undefined) o+=OTH[c];
+    else o+=c;
+  }
+  return o;
+}
+/* ---------------- DEVANAGARI → KANNADA ---------------- */
+function toKannada(s){
+  let o='';
+  for(const c of s){
+    const cp=c.codePointAt(0);
+    if(cp===0x0950) o+='ಓಂ';
+    else if(cp===0x0901) o+='ಂ';
+    else if((cp>=0x0902&&cp<=0x094D)||(cp>=0x0960&&cp<=0x0963)||(cp>=0x0966&&cp<=0x096F)){
+      const k=cp+0x380; o+=String.fromCodePoint(k);
+    } else o+=c;
+  }
+  return o;
+}
+let SCRIPT='dev';
+try{ SCRIPT=localStorage.getItem('rv-script')||'dev'; }catch(e){}
+const scr=t=>SCRIPT==='kn'?toKannada(t):t;
+function applyScriptUI(){
+  document.body.classList.toggle('kn',SCRIPT==='kn');
+  const b=document.getElementById('scriptBtn'); if(b) b.textContent = SCRIPT==='kn' ? 'ಅ → अ' : 'अ → ಅ';
+  if(b) b.title = SCRIPT==='kn' ? 'Show mantras in Devanagari' : 'Show mantras in Kannada script (ಕನ್ನಡ)';
+}
+function forSpeechKn(s){ return s.replace(/[\u0951-\u0954\u1CD0-\u1CFF\uA8E0-\uA8FF]/g,'').replace(/[०-९]/g,'').replace(/ऽ/g,'').replace(/\s+/g,' ').trim(); }
+function forSpeech(s){
+  return s.replace(/[॑-॔᳐-᳿꣠-ꣿ]/g,'')
+          .replace(/ळ्ह/g,'ढ़').replace(/ळ/g,'ड़').replace(/[०-९]/g,'').replace(/ऽ/g,'').replace(/\s+/g,' ').trim();
+}
+
+/* ---------------- SPEECH ---------------- */
+let NATIVE=null;
+try{ if(window.capacitorTextToSpeech && window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform()) NATIVE=capacitorTextToSpeech.TextToSpeech; }catch(e){}
+const TTS = {
+  ok: !!NATIVE || ('speechSynthesis' in window), voice:null, rate:0.75, token:0,
+  knVoice:null,
+  async pickNative(){
+    const has=async l=>{ try{ return (await NATIVE.isLanguageSupported({lang:l})).supported; }catch(e){ return false; } };
+    this.voice = (await has('hi-IN')) ? {name:'Hindi (tablet voice)',lang:'hi-IN'} : null;
+    this.knVoice = (await has('kn-IN')) ? {name:'Kannada (tablet voice)',lang:'kn-IN'} : null;
+    const n=document.getElementById('voiceNote'); if(n) n.outerHTML=voiceNote();
+  },
+  pick(){
+    if(!this.ok) return null;
+    if(NATIVE){ this.pickNative(); return null; }
+    let vs=[]; try{ vs=speechSynthesis.getVoices()||[]; }catch(e){}
+    this.knVoice=vs.find(v=>(v.lang||'').toLowerCase().startsWith('kn'))||null;
+    const pref=['sa','hi','mr','ne'];
+    for(const p of pref){ const v=vs.find(v=>(v.lang||'').toLowerCase().startsWith(p)); if(v){ this.voice=v; return v; } }
+    this.voice=null; return null;
+  },
+  stop(){ this.token++; this.busy=false; try{ if(NATIVE) NATIVE.stop(); else speechSynthesis.cancel(); }catch(e){} clearNow(); document.getElementById('turn').classList.remove('show'); },
+  say(text, rate, lang){
+    if(NATIVE) return NATIVE.speak({text, lang:lang||(this.voice?this.voice.lang:'hi-IN'), rate:(rate||this.rate)*1.1, queueStrategy:0}).catch(()=>{});
+    return new Promise(res=>{
+      try{
+        const u=new SpeechSynthesisUtterance(text);
+        u.rate=rate||this.rate; u.lang=lang||'hi-IN';
+        if(!lang && this.voice) u.voice=this.voice;
+        u.onend=res; u.onerror=res; speechSynthesis.speak(u);
+      }catch(e){ res(); }
+    });
+  },
+  sayWith(text, rate, voice){
+    if(NATIVE) return NATIVE.speak({text, lang:voice.lang, rate:(rate||this.rate)*1.1, queueStrategy:0}).catch(()=>{});
+    return new Promise(res=>{
+      try{ const u=new SpeechSynthesisUtterance(text); u.rate=rate||this.rate; u.voice=voice; u.lang=voice.lang; u.onend=res; u.onerror=res; speechSynthesis.speak(u); }catch(e){ res(); }
+    });
+  },
+  // lines: array of {el, text}; mode: 'play' | 'repeat'
+  async run(lines, mode, rate){
+    this.stop(); const my=++this.token;
+    for(const ln of lines){
+      if(my!==this.token) return;
+      clearNow(); ln.el.classList.add('now'); ln.card && ln.card.classList.add('playing');
+      if(ln.card) ln.card.scrollIntoView({block:'nearest',behavior:'smooth'});
+      const t0=performance.now();
+      if(SCRIPT==='kn' && this.knVoice){ await this.sayWith(toKannada(forSpeechKn(ln.text)), rate, this.knVoice); }
+      else await this.say(forSpeech(ln.text), rate);
+      if(my!==this.token) return;
+      if(mode==='repeat'){
+        const wait=Math.max(1500,(performance.now()-t0)*1.3);
+        const turn=document.getElementById('turn'); turn.classList.add('show');
+        await new Promise(r=>setTimeout(r,wait));
+        turn.classList.remove('show');
+      } else await new Promise(r=>setTimeout(r,250));
+    }
+    if(my===this.token) clearNow();
+  }
+};
+function clearNow(){ document.querySelectorAll('.ln.now').forEach(e=>e.classList.remove('now')); document.querySelectorAll('.vcard.playing').forEach(e=>e.classList.remove('playing')); }
+if(TTS.ok){ TTS.pick(); if(!NATIVE) try{ speechSynthesis.onvoiceschanged=()=>{ TTS.pick(); const n=document.getElementById('voiceNote'); if(n) n.outerHTML=voiceNote(); }; }catch(e){} }
+function voiceNote(){
+  if(!TTS.ok) return `<div class="voice-note" id="voiceNote">🔇 This browser can't speak aloud. Try Chrome, Safari or Edge.</div>`;
+  if(SCRIPT==='kn' && TTS.knVoice) return `<div class="voice-note ok" id="voiceNote">🔊 Using the Kannada voice <b>${TTS.knVoice.name}</b>. A computer voice gives a <b>rough guide</b> to the sounds — it can't do the Vedic rising and falling tones (svaras). Learn proper chanting from a teacher.</div>`;
+  if(TTS.voice) return `<div class="voice-note ok" id="voiceNote">🔊 Using the voice <b>${TTS.voice.name}</b>. A computer voice gives a <b>rough guide</b> to the sounds — it can't do the Vedic rising and falling tones (svaras). Learn proper chanting from a teacher.</div>`;
+  return `<div class="voice-note" id="voiceNote">⚠️ No Hindi or Sanskrit voice was found on this device, so the reading may sound wrong or silent. Add a <b>Hindi</b> voice in your device's text-to-speech settings, then reload this page.</div>`;
+}
+
+/* ---------------- DATA LOADING ---------------- */
+const DATA={};
+const GDATA={};
+function loadGriffith(m){
+  if(!GDATA[m]) GDATA[m]=fetch('data/g'+m+'.json').then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); }).catch(e=>{ delete GDATA[m]; return {}; });
+  return GDATA[m];
+}
+function loadMandala(m){
+  if(!DATA[m]) DATA[m]=fetch('data/m'+m+'.json').then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(a=>Object.fromEntries(a.map(x=>[x.s,x]))).catch(e=>{ delete DATA[m]; throw e; });
+  return DATA[m];
+}
+
+/* ---------------- HELPERS ---------------- */
+function quizHTML(q, key){
+  const done = solved[key];
+  return `<div class="quiz" data-key="${key}" data-a="${q.a}"><h4>⭐ Quick Quiz ${done?'— you earned this star!':''}</h4><div>${q.q}</div>
+  <div class="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('')}</div>
+  <div class="feedback" data-why="${(q.why||'').replace(/"/g,'&quot;')}"></div></div>`;
+}
+function chPager(hash){
+  const i = CH_ORDER.findIndex(o=>o.h===hash);
+  const p = CH_ORDER[i-1], n = CH_ORDER[i+1];
+  const next = n ? `<a class="next" href="#${n.h}"><small>Next Chapter →</small>${n.t}</a>` : `<a class="next" href="#s1-1"><small>Next →</small>Sukta 1.1 Agni Sukta</a>`;
+  return `<div class="pager">${p?`<a href="#${p.h}"><small>← Previous Chapter</small>${p.t}</a>`:'<span></span>'}${next}</div>`;
+}
+function sPager(m,n){
+  const M=MANDALAS[m-1]; let p=null,x=null;
+  if(n>1) p=[m,n-1]; else if(m>1) p=[m-1,MANDALAS[m-2].count];
+  if(n<M.count) x=[m,n+1]; else if(m<10) x=[m+1,1];
+  const lab=([a,b])=>`Sukta ${a}.${b}`+(byId[a+'-'+b]?' · '+byId[a+'-'+b].title:'');
+  return `<div class="pager">${p?`<a href="#s${p[0]}-${p[1]}"><small>← Previous</small>${lab(p)}</a>`:'<span></span>'}${x?`<a class="next" href="#s${x[0]}-${x[1]}"><small>Next →</small>${lab(x)}</a>`:''}</div>`;
+}
+function speakBtn(){ return TTS.ok ? `<button class="btn small blue speak" id="speakBtn">🔊 Read to me</button>` : ''; }
+function wireSpeak(){
+  const b = document.getElementById('speakBtn'); if(!b) return;
+  b.onclick = ()=>{
+    try{
+      if(TTS.busy){ TTS.stop(); b.textContent='🔊 Read to me'; return; }
+      TTS.stop(); TTS.busy=true;
+      const src=document.querySelector('#readme .story')||document.querySelector('#readme');
+      const txt=src.innerText;
+      const parts=txt.match(/[^.!?]+[.!?]*/g)||[txt];
+      b.textContent='⏹ Stop'; const my=TTS.token;
+      (async()=>{ for(const p of parts){ if(my!==TTS.token) return; await TTS.say(p.trim(),0.95,'en-IN'); } TTS.busy=false; b.textContent='🔊 Read to me'; })();
+    }catch(e){ b.style.display='none'; }
+  };
+}
+
+/* ---------------- VIEWS ---------------- */
+function viewHome(){
+  return `
+  <section class="hero"><div class="om dev">ॐ</div>
+    <h1>Welcome, Young Explorer! 🌞</h1>
+    <p>Discover the <b>Rigveda</b> — the oldest book of songs from India. Read the story of how it was made, meet the hymns (suktas) one by one, and <b>listen to every mantra</b> to practise saying it.</p>
+    <div class="row"><a class="btn" href="#ch1">📜 Start the Story</a><a class="btn ghost" href="#suktas">🕉️ Explore Suktas</a></div>
+  </section>
+  <div class="stats"><div class="stat"><b>10</b><span>Mandalas</span></div><div class="stat"><b>1,028</b><span>Suktas — every one has a page</span></div><div class="stat"><b>10,000+</b><span>Mantras you can listen to</span></div><div class="stat"><b>${SUKTAS.length}</b><span>Story pages for kids</span></div></div>
+  <h2 class="section-title">📚 Part 1 · The Story of the Rigveda</h2>
+  <div class="grid">${CHAPTERS.map((c,i)=>`<a class="card" href="#${c.id}">${solved[c.id]?'<span class="done">⭐</span>':''}<span class="tag">Chapter ${i+1}</span><div class="emo">${c.emoji}</div><h3>${c.title}</h3><p>${c.short}</p></a>`).join('')}</div>
+  <h2 class="section-title">🕉️ Part 2 · Meet the Suktas</h2>
+  <div class="grid">${SUKTAS.slice(0,8).map(sCard).join('')}</div>
+  <div style="margin-top:14px" class="row"><a class="btn blue" href="#suktas">See all ${SUKTAS.length} story suktas →</a><a class="btn blue" style="background:var(--green)" href="#mandalas">Browse all 1,028 suktas</a><a class="btn blue" style="background:var(--saffron-d)" href="#s3-62-10">🔊 Listen: Gāyatrī Mantra</a></div>`;
+}
+function sCard(s){
+  return `<a class="card" href="#s${s.id}">${solved['s'+s.id]?'<span class="done">⭐</span>':''}<span class="tag">Sukta ${s.id.replace('-','.')}</span><div class="emo">${s.emoji}</div><h3>${s.title}</h3><p>${s.nick}</p></a>`;
+}
+function viewChapter(c){
+  const idx = CHAPTERS.indexOf(c);
+  return `<div class="crumbs"><a href="#home">Home</a> › Story Chapters › Chapter ${idx+1}</div>
+  <article id="readme">${speakBtn()}<div class="big-emo">${c.emoji}</div><span class="card tag" style="display:inline-block;padding:2px 10px;border:0">Chapter ${idx+1} of ${CHAPTERS.length}</span><h1>${c.title}</h1>${c.body}${quizHTML(c.quiz,c.id)}</article>${chPager(c.id)}`;
+}
+function mantraSection(m,n){
+  return `<h2 id="mantras">🕉️ All the mantras of this sukta</h2>
+  ${voiceNote()}
+  <div class="toolbar">
+    <button class="tbtn main" id="playAll">▶ Play all</button>
+    <button class="tbtn" id="repeatAll">🔁 Repeat after me</button>
+    <button class="tbtn" id="stopAll">⏹ Stop</button>
+    <label>Speed <select id="rate"><option value="0.5">🐢 Slow</option><option value="0.75" selected>Normal</option><option value="1">Fast</option></select></label>
+    <label><input type="checkbox" id="showIast" checked> English letters</label>
+    <label><input type="checkbox" id="showMean" checked> Meanings</label>
+  </div>
+  <p style="font-size:.88rem;color:var(--muted);margin:6px 2px">💬 Meanings are from Ralph Griffith's English translation (1896). It uses old-fashioned words like "thee" and "thou", and some words reflect his time — ask an adult if something is unclear.</p>
+  <div class="vlist" id="vlist"><div class="loading">Loading mantras… 🪔</div></div>`;
+}
+function viewSuktaKid(s){
+  const [m,n] = s.id.split('-').map(Number);
+  return `<div class="crumbs"><a href="#home">Home</a> › <a href="#suktas">Suktas</a> › <a href="#m${m}">Mandala ${m}</a> › ${m}.${n}</div>
+  <article id="readme">${speakBtn()}<div class="big-emo">${s.emoji}</div><span class="card tag" style="display:inline-block;padding:2px 10px;border:0">Rigveda ${m}.${n}</span>
+  <h1>${s.title}</h1><p class="lead">${s.nick}</p>
+  <div class="facts"><div class="fact"><small>🧘 Seer (Ṛṣi)</small><div>${s.rishi}</div></div><div class="fact"><small>✨ God / Topic</small><div>${s.deity}</div></div><div class="fact"><small>🎵 Meter</small><div>${s.meter}</div></div><div class="fact"><small>🔢 Verses</small><div>${s.verses}</div></div></div>
+  <h2>📖 The story</h2><div class="story">${s.story}</div>
+  <h2>🌟 Key verse</h2>
+  <div class="verse"><div class="ref">Rigveda ${s.verse.ref}</div><div class="dev">${scr(s.verse.dev)}</div><div class="iast">${s.verse.iast}</div><div class="mean">💬 ${s.verse.mean}</div>
+  <div style="margin-top:10px"><a class="tbtn main" style="text-decoration:none;display:inline-block" href="#s${m}-${n}-${parseInt(s.verse.ref.split('.')[2])}">🔊 Listen to this verse</a></div></div>
+  <div class="box learn"><h4>🌱 What can we learn?</h4><ul>${s.lessons.map(l=>`<li>${l}</li>`).join('')}</ul></div>
+  <div class="box know"><h4>💡 Fun fact</h4>${s.fun}</div>
+  ${quizHTML(s.quiz,'s'+s.id)}
+  ${mantraSection(m,n)}</article>${sPager(m,n)}`;
+}
+function viewSuktaPlain(m,n){
+  return `<div class="crumbs"><a href="#home">Home</a> › <a href="#mandalas">Mandalas</a> › <a href="#m${m}">Mandala ${m}</a> › ${m}.${n}</div>
+  <article><div class="big-emo">🕉️</div><span class="card tag" style="display:inline-block;padding:2px 10px;border:0">Rigveda ${m}.${n}</span>
+  <h1>Sukta ${m}.${n}</h1>
+  <div class="facts" id="idcard"><div class="fact"><small>Loading…</small><div>🪔</div></div></div>
+  <p class="lead" style="font-size:1rem">Every sukta has a seer (<b>Ṛṣi</b>), a god or topic (<b>Devatā</b>) and a rhythm (<b>Chandas</b>). Press ▶ on any mantra to hear it, or 🔁 to practise line by line.</p>
+  ${mantraSection(m,n)}</article>${sPager(m,n)}`;
+}
+function viewSuktas(){
+  const ms = [...new Set(SUKTAS.map(s=>s.id.split('-')[0]))];
+  return `<div class="crumbs"><a href="#home">Home</a> › Suktas</div>
+  <h1>🕉️ The Sukta Library</h1><p class="lead">These suktas have kid-friendly story pages. Every one of the 1,028 suktas also has a page with all its mantras to listen to.</p>
+  ${jumpBox()}
+  <div class="filter" id="filter"><button class="on" data-m="all">All</button>${ms.map(m=>`<button data-m="${m}">Mandala ${m}</button>`).join('')}</div>
+  <div class="grid" id="slist">${SUKTAS.map(sCard).join('')}</div>`;
+}
+function jumpBox(){
+  return `<form class="jump" id="jump"><b>🔎 Go to any sukta:</b> Mandala <select id="jm">${MANDALAS.map(m=>`<option>${m.n}</option>`).join('')}</select> Sukta <input id="js" type="number" min="1" value="1" inputmode="numeric"> <button class="tbtn main" type="submit">Go</button></form>`;
+}
+function viewMandalas(){
+  return `<div class="crumbs"><a href="#home">Home</a> › 10 Mandalas</div>
+  <h1>📚 The 10 Mandalas</h1><p class="lead">The Rigveda's 10 books. Mandalas 2–7 are the "Family Books" — each from one family of seers.</p>
+  ${jumpBox()}
+  <div class="grid">${MANDALAS.map(m=>{const f=SUKTAS.filter(s=>s.id.startsWith(m.n+'-')).length;return `<a class="card" href="#m${m.n}"><span class="tag">${m.count} suktas</span><div class="emo">${m.emoji}</div><h3>Mandala ${m.n}</h3><p>${m.who}</p><p style="margin-top:6px">⭐ <b>${f}</b> story page${f==1?'':'s'}</p></a>`}).join('')}</div>`;
+}
+function viewMandala(m){
+  const feats = SUKTAS.filter(s=>s.id.startsWith(m.n+'-'));
+  const set = new Set(feats.map(s=>+s.id.split('-')[1]));
+  let cells=''; for(let i=1;i<=m.count;i++){ cells += set.has(i)?`<a href="#s${m.n}-${i}" title="${byId[m.n+'-'+i].title}">⭐${i}</a>`:`<a class="plain" href="#s${m.n}-${i}" title="Sukta ${m.n}.${i}">${i}</a>`; }
+  return `<div class="crumbs"><a href="#home">Home</a> › <a href="#mandalas">10 Mandalas</a> › Mandala ${m.n}</div>
+  <article><div class="big-emo">${m.emoji}</div><h1>Mandala ${m.n}</h1><p class="lead">${m.about}</p>
+  <div class="facts"><div class="fact"><small>Suktas</small><div>${m.count}</div></div><div class="fact"><small>Seers</small><div>${m.who}</div></div><div class="fact"><small>Story pages</small><div>${feats.length}</div></div></div>
+  ${feats.length?`<h2>⭐ Story suktas</h2><div class="grid">${feats.map(sCard).join('')}</div>`:''}
+  <h2>All ${m.count} suktas</h2>
+  <div class="legend"><span><i style="background:var(--saffron)"></i>Story page + mantras</span><span><i style="background:#fff;border:2px solid var(--line)"></i>Mantras to listen to</span></div>
+  <div class="mgrid">${cells}</div></article>
+  <div class="pager">${m.n>1?`<a href="#m${m.n-1}"><small>← Previous</small>Mandala ${m.n-1}</a>`:'<span></span>'}${m.n<10?`<a class="next" href="#m${m.n+1}"><small>Next →</small>Mandala ${m.n+1}</a>`:''}</div>`;
+}
+
+/* ---------------- MANTRA RENDERING ---------------- */
+function esc(s){ return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+async function fillMantras(m,n,focus){
+  const box=document.getElementById('vlist'); if(!box) return;
+  let rec;
+  let G={};
+  try{ const [d,g]=await Promise.all([loadMandala(m),loadGriffith(m)]); rec=d[n]; G=(g&&g[n])||{}; }
+  catch(e){ box.innerHTML=`<div class="voice-note">Couldn't load the mantras. Check your internet connection and reload the page.</div>`; return; }
+  const id=document.getElementById('idcard');
+  if(!rec||!rec.v.length){
+    box.innerHTML=`<div class="voice-note">The text of sukta ${m}.${n} isn't in our source collection yet. Ask a teacher or look in a printed Rigveda.</div>`;
+    if(id) id.innerHTML=`<div class="fact"><small>Status</small><div>Text not available</div></div>`;
+    return;
+  }
+  if(id){
+    const f=(lab,v)=>v?`<div class="fact"><small>${lab}</small><div class="dev" style="font-size:1.1rem">${esc(scr(v))}</div><div style="font-weight:600;font-style:italic;color:var(--muted);font-size:.88rem">${esc(toIAST(v))}</div></div>`:'';
+    id.innerHTML=f('🧘 Seer (Ṛṣi)',rec.r)+f('✨ God / Topic (Devatā)',rec.d)+f('🎵 Meter (Chandas)',rec.c)+`<div class="fact"><small>🔢 Mantras</small><div>${rec.v.length}</div></div>`;
+  }
+  const gk=Object.keys(G).map(Number), cnt=rec.v.length;
+  const blockMode = gk.length>0 && (gk.some(k=>k>cnt) || (cnt>=6 && gk.length<=Math.ceil(cnt/2)+1));
+  const meanFor=i=> (!blockMode && G[i+1]) ? `<div class="vmean"><span class="mt">💬 ${esc(G[i+1])}</span><button data-act="mean">🔊 Meaning</button></div>` : '';
+  box.innerHTML=rec.v.map((lines,i)=>`<div class="vcard" id="v${i+1}" data-i="${i}">
+    <div class="vhead"><span class="vnum">${m}.${n}.${i+1}</span>
+      <div class="vbtns"><button data-act="play">▶ Listen</button><button data-act="slow">🐢 Slow</button><button data-act="repeat">🔁 Repeat after me</button></div></div>
+    <div class="vdev">${lines.map(l=>`<span class="ln" data-t="${esc(l).replace(/"/g,'&quot;')}">${esc(scr(l))}</span>`).join('')}</div>
+    <div class="viast">${lines.map(l=>esc(toIAST(l))).join(' | ')}</div>${meanFor(i)}</div>`).join('')
+    + (blockMode ? `<div class="gblock"><h4>💬 Meaning of the whole hymn</h4><p style="font-size:.88rem;color:var(--muted);margin:0">Griffith counts the verses of this hymn differently, so here is his translation in his own numbering.</p><ol>${gk.sort((a,b)=>a-b).map(k=>`<li value="${k}">${esc(G[k])}</li>`).join('')}</ol></div>` : '');
+  const rate=()=>+document.getElementById('rate').value;
+  const linesOf=card=>[...card.querySelectorAll('.ln')].map(el=>({el,card,text:el.dataset.t}));
+  box.querySelectorAll('.vcard').forEach(card=>{
+    card.querySelectorAll('.vbtns button, .vmean button').forEach(b=>b.onclick=()=>{
+      const a=b.dataset.act;
+      if(a==='mean'){ TTS.stop(); const t=card.querySelector('.mt').textContent.replace('💬',''); TTS.say(t.trim(),0.95,'en-IN'); return; }
+      TTS.run(linesOf(card), a==='repeat'?'repeat':'play', a==='slow'?0.5:rate());
+    });
+  });
+  const all=()=>[...box.querySelectorAll('.vcard')].flatMap(linesOf);
+  document.getElementById('playAll').onclick=()=>TTS.run(all(),'play',rate());
+  document.getElementById('repeatAll').onclick=()=>TTS.run(all(),'repeat',rate());
+  document.getElementById('stopAll').onclick=()=>TTS.stop();
+  const chk=document.getElementById('showIast');
+  chk.onchange=()=>box.classList.toggle('hide-iast',!chk.checked);
+  const mchk=document.getElementById('showMean');
+  mchk.onchange=()=>box.classList.toggle('hide-mean',!mchk.checked);
+  if(window._restoreY!=null){ window.scrollTo(0,window._restoreY); window._restoreY=null; focus=0; }
+  if(focus){ const el=document.getElementById('v'+focus); if(el){ el.scrollIntoView({block:'center'}); el.classList.add('playing'); setTimeout(()=>el.classList.remove('playing'),2500); } }
+}
+
+/* ---------------- ROUTER ---------------- */
+function route(){
+  TTS.stop();
+  const h = (location.hash||'#home').slice(1);
+  let html, navk='home', after=null;
+  const ch = CHAPTERS.find(c=>c.id===h);
+  const sm = h.match(/^s(\d+)-(\d+)(?:-(\d+))?$/);
+  if(ch){ html=viewChapter(ch); navk='ch'; }
+  else if(sm && MANDALAS[+sm[1]-1] && +sm[2]>=1 && +sm[2]<=MANDALAS[+sm[1]-1].count){
+    const m=+sm[1], n=+sm[2], k=m+'-'+n;
+    html = byId[k] ? viewSuktaKid(byId[k]) : viewSuktaPlain(m,n);
+    navk='suktas'; after=()=>fillMantras(m,n,sm[3]?+sm[3]:0);
+  }
+  else if(h==='suktas'){ html=viewSuktas(); navk='suktas'; }
+  else if(h==='mandalas'){ html=viewMandalas(); navk='mandalas'; }
+  else if(/^m\d+$/.test(h) && MANDALAS[+h.slice(1)-1]){ html=viewMandala(MANDALAS[+h.slice(1)-1]); navk='mandalas'; }
+  else html=viewHome();
+  app.innerHTML = html;
+  document.querySelectorAll('#nav a,#mnav a').forEach(a=>a.classList.toggle('on',a.dataset.k===navk));
+  if(window._restoreY==null || !after) window.scrollTo(0,0);
+  if(!after) window._restoreY=null;
+  wireQuiz(); wireSpeak(); wireFilter(); wireJump(); updateStars();
+  if(after) after();
+}
+function wireQuiz(){
+  document.querySelectorAll('.quiz').forEach(qz=>{
+    const ans=+qz.dataset.a, key=qz.dataset.key, fb=qz.querySelector('.feedback');
+    qz.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const i=+b.dataset.i;
+      qz.querySelectorAll('.opt').forEach(x=>x.classList.remove('right','wrong'));
+      if(i===ans){ b.classList.add('right'); fb.textContent='🎉 Correct! You earned a star. '+(fb.dataset.why||''); if(!solved[key]){solved[key]=1;save();updateStars();} }
+      else { b.classList.add('wrong'); fb.textContent='Not quite — try again! 💪'; }
+    });
+  });
+}
+function wireFilter(){
+  const f=document.getElementById('filter'); if(!f) return;
+  f.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    f.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+    const m=b.dataset.m;
+    document.getElementById('slist').innerHTML = SUKTAS.filter(s=>m==='all'||s.id.startsWith(m+'-')).map(sCard).join('');
+  });
+}
+function wireJump(){
+  const f=document.getElementById('jump'); if(!f) return;
+  const sel=document.getElementById('jm'), inp=document.getElementById('js');
+  const upd=()=>{ inp.max=MANDALAS[+sel.value-1].count; };
+  sel.onchange=upd; upd();
+  f.onsubmit=e=>{ e.preventDefault(); const m=+sel.value; const n=Math.min(Math.max(1,parseInt(inp.value)||1),MANDALAS[m-1].count); location.hash='s'+m+'-'+n; };
+}
+document.getElementById('scriptBtn').onclick=()=>{
+  SCRIPT = SCRIPT==='kn' ? 'dev' : 'kn';
+  try{ localStorage.setItem('rv-script',SCRIPT); }catch(e){}
+  applyScriptUI();
+  const y=window.scrollY; window._restoreY=y; route(); window.scrollTo(0,y);
+};
+applyScriptUI();
+
+/* ---------------- APP INSTALL + OFFLINE ---------------- */
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3500); }
+(function(){
+  const btn=document.getElementById('installBtn');
+  let standalone=false;
+  try{ standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone===true; }catch(e){}
+  let deferred=null;
+  window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; if(!standalone) btn.style.display='inline-block'; });
+  window.addEventListener('appinstalled',()=>{ btn.style.display='none'; toast('✅ Rigveda app installed!'); });
+  const ua=navigator.userAgent||'';
+  const isIOS=/iPad|iPhone|iPod/.test(ua) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+  let inFrame=false; try{ inFrame = window.self!==window.top; }catch(e){ inFrame=true; }
+  if(isIOS && !standalone && !inFrame) btn.style.display='inline-block';
+  btn.onclick=async()=>{
+    if(deferred){ try{ deferred.prompt(); await deferred.userChoice; }catch(e){} deferred=null; btn.style.display='none'; }
+    else document.getElementById('iosHelp').classList.add('show');
+  };
+  document.getElementById('iosClose').onclick=()=>document.getElementById('iosHelp').classList.remove('show');
+  try{
+    if(!NATIVE && 'serviceWorker' in navigator && !inFrame && (location.protocol==='https:'||location.hostname==='localhost')){
+      navigator.serviceWorker.register('sw.js').then(reg=>{
+        if(!navigator.serviceWorker.controller){
+          const w=reg.installing||reg.waiting;
+          if(w) w.addEventListener('statechange',()=>{ if(w.state==='activated') toast('✅ All mantras saved — works offline now!'); });
+        }
+      }).catch(()=>{});
+    }
+  }catch(e){}
+})();
+
+window.addEventListener('hashchange',route);
+route();
+</script>
+</body>
+</html>

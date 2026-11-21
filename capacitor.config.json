@@ -1,0 +1,6 @@
+{
+  "appId": "com.rigvedaexplorers.app",
+  "appName": "Rigveda",
+  "webDir": "www",
+  "android": { "backgroundColor": "#fff8ec" }
+}
