@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rigveda for Young Explorers</title>
+<link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#f28c28">
 <link rel="icon" type="image/png" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -143,6 +144,20 @@ article h2{font-size:1.4rem;margin-top:1.4em}
 .vmean .mt{flex:1}
 .vmean button{border:2px solid #cddaf5;background:#fff;border-radius:999px;padding:2px 9px;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;white-space:nowrap}
 .hide-mean .vmean,.hide-mean .gblock{display:none}
+.vbtns2{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.vbtns2 button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;font:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
+.vbtns2 button.on{background:#ffe7c2;border-color:var(--saffron)}
+.words{display:none;margin-top:8px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.words.show{display:grid}
+.wd{background:#fffaf0;border:1.5px solid var(--line);border-radius:12px;padding:6px 9px;line-height:1.35}
+.wd .wdev{font-family:"Tiro Devanagari Sanskrit",serif;font-size:1.12rem;color:#5a2a08}
+body.kn .wd .wdev{font-family:"Noto Serif Kannada",serif}
+.wd .wiast{font-style:italic;color:#7a4b22;font-size:.82rem}
+.wd .wm{font-size:.86rem;font-weight:600;margin-top:2px}
+.wd .wh{font-size:.75rem;color:var(--blue);font-weight:700}
+.disc{display:none;margin-top:8px;background:var(--leaf);border-radius:12px;padding:9px 12px;font-size:.97rem}
+.disc.show{display:block}
+.disc small{display:block;color:var(--muted);font-size:.75rem;margin-top:4px}
 .gblock{margin-top:14px;background:var(--sky);border-radius:16px;padding:12px 16px}
 .gblock ol{margin:.4em 0;padding-left:1.4em}
 .gblock li{margin:.3em 0}
@@ -198,7 +213,7 @@ footer{text-align:center;color:var(--muted);font-size:.88rem;padding:20px}
 <div class="modal" id="iosHelp"><div class="modal-box"><h3>📲 Install on iPad / iPhone</h3><ol><li>Open this page in <b>Safari</b>.</li><li>Tap the <b>Share</b> button (square with an arrow ⬆️).</li><li>Choose <b>Add to Home Screen</b>, then <b>Add</b>.</li></ol><p>The Rigveda icon will appear on your home screen and work without internet.</p><button class="btn blue" id="iosClose">Got it</button></div></div>
 <div class="turn" id="toast" style="background:var(--blue)"></div>
 <div class="turn" id="turn">🗣️ Your turn — say it!</div>
-<footer>Made for young learners 🪔 Simple meanings are friendly explanations, not word-for-word translations. Ask a teacher or elder to help you chant the verses correctly.<br>Full Sanskrit text of the Rigveda from <a href="https://github.com/bhavykhatri/DharmicData">DharmicData</a> by Bhavy Khatri, used under the Open Database License (ODbL). English meanings: Ralph T. H. Griffith's translation (1896, public domain), as digitised by the <a href="https://vedaweb.uni-koeln.de">VedaWeb</a> project, University of Cologne.</footer>
+<footer>Made for young learners 🪔 Simple meanings are friendly explanations, not word-for-word translations. Ask a teacher or elder to help you chant the verses correctly.<br>Full Sanskrit text of the Rigveda from <a href="https://github.com/bhavykhatri/DharmicData">DharmicData</a> by Bhavy Khatri, used under the Open Database License (ODbL). English meanings: Ralph T. H. Griffith's translation (1896, public domain), as digitised by the <a href="https://vedaweb.uni-koeln.de">VedaWeb</a> project, University of Cologne. Word analysis: VedaWeb. Word meanings: Monier-Williams Sanskrit-English Dictionary (1899) via the <a href="https://www.sanskrit-lexicon.uni-koeln.de">Cologne Digital Sanskrit Dictionaries</a>. 🪔 Explanations are written by Claude (AI) for children.</footer>
 
 <script>
 /* ---------------- DATA: STORY CHAPTERS ---------------- */
@@ -686,6 +701,16 @@ function voiceNote(){
 
 /* ---------------- DATA LOADING ---------------- */
 const DATA={};
+const WDATA={}, DDATA={}; let LEX=null;
+function loadWords(m){
+  if(!LEX) LEX=fetch('data/lex.json').then(r=>r.ok?r.json():{}).catch(()=>{ LEX=null; return {}; });
+  if(!WDATA[m]) WDATA[m]=Promise.all([fetch('data/w'+m+'.json').then(r=>r.ok?r.json():{}), LEX]).catch(()=>{ delete WDATA[m]; return [{},{}]; });
+  return WDATA[m];
+}
+function loadDisc(m){
+  if(!DDATA[m]) DDATA[m]=fetch('data/d'+m+'.json').then(r=>r.ok?r.json():{}).catch(()=>({}));
+  return DDATA[m];
+}
 const GDATA={};
 function loadGriffith(m){
   if(!GDATA[m]) GDATA[m]=fetch('data/g'+m+'.json').then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); }).catch(e=>{ delete GDATA[m]; return {}; });
@@ -766,6 +791,7 @@ function mantraSection(m,n){
     <label>Speed <select id="rate"><option value="0.5">🐢 Slow</option><option value="0.75" selected>Normal</option><option value="1">Fast</option></select></label>
     <label><input type="checkbox" id="showIast" checked> English letters</label>
     <label><input type="checkbox" id="showMean" checked> Meanings</label>
+    <label><input type="checkbox" id="showDisc"> All explanations</label>
   </div>
   <p style="font-size:.88rem;color:var(--muted);margin:6px 2px">💬 Meanings are from Ralph Griffith's English translation (1896). It uses old-fashioned words like "thee" and "thou", and some words reflect his time — ask an adult if something is unclear.</p>
   <div class="vlist" id="vlist"><div class="loading">Loading mantras… 🪔</div></div>`;
@@ -826,11 +852,26 @@ function viewMandala(m){
 
 /* ---------------- MANTRA RENDERING ---------------- */
 function esc(s){ return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function showWords(card,m,n,v,on){
+  const box=card.querySelector('.words');
+  if(!on){ box.classList.remove('show'); return; }
+  box.classList.add('show');
+  if(box.dataset.done) return;
+  box.innerHTML='<div class="loading" style="padding:6px">Loading words…</div>';
+  loadWords(m).then(([W,L])=>{
+    const toks=(W[n]&&W[n][v])||[];
+    if(!toks.length){ box.innerHTML='<div style="color:var(--muted);font-size:.9rem">Word-by-word data is not available for this verse.</div>'; return; }
+    box.innerHTML=toks.map(([dev,iast,key,h])=>{ const e=L[key]||['','']; return `<div class="wd"><div class="wdev">${esc(scr(dev))}</div><div class="wiast">${esc(iast)}${key&&key!==iast?' ← '+esc(key):''}</div>${e[1]?`<div class="wm">${esc(e[1])}</div>`:''}${h?`<div class="wh">${esc(h)}</div>`:''}</div>`; }).join('')
+      + '<div style="grid-column:1/-1;font-size:.75rem;color:var(--muted)">Word analysis: VedaWeb (Univ. of Cologne). Meanings: Monier-Williams dictionary (1899) and simplified notes. Blue labels show the word\'s job, e.g. "object" or "of".</div>';
+    box.dataset.done=1;
+  });
+}
 async function fillMantras(m,n,focus){
   const box=document.getElementById('vlist'); if(!box) return;
   let rec;
   let G={};
-  try{ const [d,g]=await Promise.all([loadMandala(m),loadGriffith(m)]); rec=d[n]; G=(g&&g[n])||{}; }
+  let D={};
+  try{ const [d,g,dd]=await Promise.all([loadMandala(m),loadGriffith(m),loadDisc(m)]); rec=d[n]; G=(g&&g[n])||{}; D=(dd&&dd[n])||{}; }
   catch(e){ box.innerHTML=`<div class="voice-note">Couldn't load the mantras. Check your internet connection and reload the page.</div>`; return; }
   const id=document.getElementById('idcard');
   if(!rec||!rec.v.length){
@@ -849,13 +890,19 @@ async function fillMantras(m,n,focus){
     <div class="vhead"><span class="vnum">${m}.${n}.${i+1}</span>
       <div class="vbtns"><button data-act="play">▶ Listen</button><button data-act="slow">🐢 Slow</button><button data-act="repeat">🔁 Repeat after me</button></div></div>
     <div class="vdev">${lines.map(l=>`<span class="ln" data-t="${esc(l).replace(/"/g,'&quot;')}">${esc(scr(l))}</span>`).join('')}</div>
-    <div class="viast">${lines.map(l=>esc(toIAST(l))).join(' | ')}</div>${meanFor(i)}</div>`).join('')
+    <div class="viast">${lines.map(l=>esc(toIAST(l))).join(' | ')}</div>${meanFor(i)}
+    <div class="vbtns2"><button data-act="words">📖 Word by word</button>${D[i+1]?'<button data-act="disc">🪔 Explanation</button>':''}</div>
+    <div class="words"></div>
+    ${D[i+1]?`<div class="disc"><span class="dt">🪔 ${esc(D[i+1])}</span> <button data-act="dspeak" style="border:2px solid #bfe3cc;background:#fff;border-radius:999px;padding:1px 8px;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer">🔊</button><small>Explanation written by Claude (AI) for young learners — check with a teacher.</small></div>`:''}</div>`).join('')
     + (blockMode ? `<div class="gblock"><h4>💬 Meaning of the whole hymn</h4><p style="font-size:.88rem;color:var(--muted);margin:0">Griffith counts the verses of this hymn differently, so here is his translation in his own numbering.</p><ol>${gk.sort((a,b)=>a-b).map(k=>`<li value="${k}">${esc(G[k])}</li>`).join('')}</ol></div>` : '');
   const rate=()=>+document.getElementById('rate').value;
   const linesOf=card=>[...card.querySelectorAll('.ln')].map(el=>({el,card,text:el.dataset.t}));
   box.querySelectorAll('.vcard').forEach(card=>{
-    card.querySelectorAll('.vbtns button, .vmean button').forEach(b=>b.onclick=()=>{
+    card.querySelectorAll('.vbtns button, .vmean button, .vbtns2 button, .disc button').forEach(b=>b.onclick=()=>{
       const a=b.dataset.act;
+      if(a==='words'){ b.classList.toggle('on'); showWords(card,m,n,+card.dataset.i+1,b.classList.contains('on')); return; }
+      if(a==='disc'){ b.classList.toggle('on'); card.querySelector('.disc').classList.toggle('show',b.classList.contains('on')); return; }
+      if(a==='dspeak'){ TTS.stop(); TTS.say(card.querySelector('.dt').textContent.replace('🪔','').trim(),0.95,'en-IN'); return; }
       if(a==='mean'){ TTS.stop(); const t=card.querySelector('.mt').textContent.replace('💬',''); TTS.say(t.trim(),0.95,'en-IN'); return; }
       TTS.run(linesOf(card), a==='repeat'?'repeat':'play', a==='slow'?0.5:rate());
     });
@@ -866,6 +913,10 @@ async function fillMantras(m,n,focus){
   document.getElementById('stopAll').onclick=()=>TTS.stop();
   const chk=document.getElementById('showIast');
   chk.onchange=()=>box.classList.toggle('hide-iast',!chk.checked);
+  const dchk=document.getElementById('showDisc');
+  try{ dchk.checked = localStorage.getItem('rv-disc')==='1'; }catch(e){}
+  const applyDisc=()=>{ box.querySelectorAll('.vcard').forEach(c=>{ const d=c.querySelector('.disc'); if(d){ d.classList.toggle('show',dchk.checked); const b=c.querySelector('[data-act=disc]'); if(b) b.classList.toggle('on',dchk.checked); } }); try{ localStorage.setItem('rv-disc',dchk.checked?'1':'0'); }catch(e){} };
+  dchk.onchange=applyDisc; applyDisc();
   const mchk=document.getElementById('showMean');
   mchk.onchange=()=>box.classList.toggle('hide-mean',!mchk.checked);
   if(window._restoreY!=null){ window.scrollTo(0,window._restoreY); window._restoreY=null; focus=0; }

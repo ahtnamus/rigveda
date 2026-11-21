@@ -32,11 +32,18 @@ pick **Speech Services by Google**, and download the **Hindi** and **Kannada** v
 
 Needs Node 20+, JDK 21 and Android Studio.
 
+## The website (GitHub Pages)
+
+The same `www` folder is published as a website by `.github/workflows/pages.yml`.
+One-time setup: repository **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+The site appears at https://ahtnamus.github.io/<repository-name>/ a minute after each push.
+
 ## Changing the content
 
 The whole app is `www/index.html` plus the mantra data in `www/data/`. Edit, then push to GitHub — a new APK is built automatically.
 
 ## Credits
 
+English meanings: R.T.H. Griffith (1896, public domain) via VedaWeb (University of Cologne). Word analysis: VedaWeb. Word meanings: Monier-Williams Sanskrit-English Dictionary (1899) via Cologne Digital Sanskrit Dictionaries. Explanations (🪔): written by Claude (AI).
 Sanskrit text: DharmicData by Bhavy Khatri (https://github.com/bhavykhatri/DharmicData), Open Database License (ODbL).
 Fonts: Baloo 2, Nunito, Tiro Devanagari Sanskrit, Noto Serif Kannada (SIL Open Font License), via Fontsource.
